@@ -60,7 +60,7 @@
     var f=document.getElementById("pie"); if(!f) return;
     f.className="pie";
     f.innerHTML='<div class="env pie-in">'+
-      '<span><b>Campo y Corriente</b> · guía de estudio de electromagnetismo con figuras propias</span>'+
+      '<span><b>Campo y Corriente</b> · guía de estudio de Física II · Alumno: <b>David Gustavo Vargas Espinoza</b></span>'+
       '<span><a href="formulario.html">Formulario</a> · <a href="simuladores.html">Simuladores</a> · '+
       '<a href="https://github.com/DavidCoder132/campo-y-corriente">Código en GitHub</a></span></div>';
   }
