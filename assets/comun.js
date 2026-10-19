@@ -35,7 +35,7 @@
     h.className="top";
     h.innerHTML='<div class="env top-in">'+
       '<a class="marca" href="index.html"><span class="marca-logo">'+LOGO+'</span>'+
-      '<span><b>Campo y Corriente</b><small>Electromagnetismo para estudiar</small></span></a>'+
+      '<span><b>Campo y Corriente</b><small>Física II · Electromagnetismo</small></span></a>'+
       '<nav class="nav" id="nav" aria-label="Principal">'+links+'</nav>'+
       '<button class="icon-btn" id="tema" type="button" aria-label="Cambiar tema claro u oscuro"></button>'+
       '<button class="icon-btn menu-btn" id="menu" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">'+ICO_MENU+'</button>'+
