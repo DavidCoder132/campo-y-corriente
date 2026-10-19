@@ -1,12 +1,12 @@
 /* Campo y Corriente — tema común.
-   Fondo crema cálido, tarjetas blancas redondeadas y un color por unidad. */
+   Tema claro por defecto (el oscuro solo si se elige con el botón). Fondo casi blanco, tarjetas blancas redondeadas y un color por unidad. */
 :root{
-  --bg:#fbf8f3;
-  --bg2:#f3eee5;
+  --bg:#fdfcfa;
+  --bg2:#f4f2ee;
   --card:#ffffff;
   --ink:#1d2433;
   --ink2:#5b6474;
-  --line:#e9e2d6;
+  --line:#ebe6de;
   --sombra:0 1px 2px rgba(29,36,51,.05),0 6px 20px rgba(29,36,51,.06);
 
   --pri:#2f6fde;   --pri-sv:#e7eefc;
@@ -20,16 +20,6 @@
   --f-txt:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;
   --r:16px;
   color-scheme:light;
-}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --bg:#12151c; --bg2:#171b24; --card:#1b202b; --ink:#e9ecf3; --ink2:#9ca5b7; --line:#2a313e;
-    --sombra:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
-    --pri:#7aa2ff; --pri-sv:#1d2944; --menta:#4fd1ac; --menta-sv:#15302a;
-    --coral:#ff8d73; --coral-sv:#3a211b; --sol:#f2c14e; --sol-sv:#352a12;
-    --lila:#a993ff; --lila-sv:#272042; --rosa:#f281b3; --rosa-sv:#3a1e2c;
-    color-scheme:dark;
-  }
 }
 :root[data-theme="dark"]{
   --bg:#12151c; --bg2:#171b24; --card:#1b202b; --ink:#e9ecf3; --ink2:#9ca5b7; --line:#2a313e;
@@ -126,7 +116,6 @@ button,input,select{font:inherit;color:inherit}
 .btn:hover{transform:translateY(-1px)}
 .btn.pri{background:var(--pri);color:#fff;box-shadow:0 6px 18px color-mix(in srgb,var(--pri) 30%,transparent)}
 :root[data-theme="dark"] .btn.pri{color:#0d1424}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn.pri{color:#0d1424}}
 .btn.sec{background:var(--card);border-color:var(--line);color:var(--ink)}
 .btn.sec:hover{border-color:var(--ink2)}
 .btn.peq{padding:7px 13px;font-size:.86rem;border-radius:10px}

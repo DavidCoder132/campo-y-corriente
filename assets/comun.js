@@ -22,9 +22,7 @@
   function leer(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
 
   function oscuroAhora(){
-    var t=document.documentElement.getAttribute("data-theme");
-    if(t) return t==="dark";
-    return window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches;
+    return document.documentElement.getAttribute("data-theme")==="dark";
   }
 
   function cabecera(){

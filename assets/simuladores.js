@@ -479,6 +479,5 @@ document.addEventListener("DOMContentLoaded",function(){
   })();
 
   document.addEventListener("cc-tema",function(){ redibujos.forEach(function(f){ f(); }); });
-  if(window.matchMedia) matchMedia("(prefers-color-scheme: dark)").addEventListener("change",function(){ redibujos.forEach(function(f){ f(); }); });
   abrir(location.hash.slice(1));
 });
