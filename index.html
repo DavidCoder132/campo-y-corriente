@@ -18,13 +18,11 @@
 .mini{padding:16px;display:flex;flex-direction:column;gap:10px}
 .mini canvas{width:100%;aspect-ratio:4/3;border-radius:12px;background:var(--bg2);touch-action:none;cursor:crosshair}
 .mini-pie{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 10px;font-size:.84rem;color:var(--ink2)}
-.temas-clave{margin-top:28px;max-width:560px}
-.temas-clave p{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);margin-bottom:10px}
-.temas-clave div{display:flex;flex-wrap:wrap;gap:8px}
-.temas-clave a{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;text-decoration:none;
-  font-weight:600;font-size:.88rem;color:var(--ink);background:var(--card);border:1px solid var(--line)}
-.temas-clave a::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--u)}
-.temas-clave a:hover{border-color:var(--u);background:var(--u-sv)}
+.cifras{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px;max-width:430px}
+.cifras div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.cifras b{display:block;font-family:var(--f-tit);font-size:1.6rem;line-height:1.1}
+.cifras span{font-size:.8rem;color:var(--ink2);overflow-wrap:anywhere}
+
 .ruta{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));margin:0;padding:0}
 .ruta li{list-style:none;padding:18px}
 .ruta .n{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-tit);
@@ -49,16 +47,10 @@
           <a class="btn pri" href="teoria.html">Empezar por la teoría →</a>
           <a class="btn sec" href="simuladores.html">Abrir simuladores</a>
         </div>
-        <div class="temas-clave">
-          <p>Ir directo a un tema</p>
-          <div>
-            <a class="c-u1" href="teoria.html#u1">Ley de Coulomb</a>
-            <a class="c-u2" href="teoria.html#u2">Campo eléctrico</a>
-            <a class="c-u3" href="teoria.html#u3">Ley de Gauss</a>
-            <a class="c-u4" href="teoria.html#u4">Potencial</a>
-            <a class="c-u5" href="teoria.html#u5">Capacitancia</a>
-            <a class="c-u6" href="teoria.html#u6">Kirchhoff y RC</a>
-          </div>
+        <div class="cifras">
+          <div><b>6</b><span>unidades</span></div>
+          <div><b>4</b><span>simuladores</span></div>
+          <div><b>51</b><span>fórmulas</span></div>
         </div>
       </div>
       <div class="tarjeta mini aparece">
