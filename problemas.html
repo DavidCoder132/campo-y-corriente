@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Problemas · Campo y Corriente</title>
+<meta name="description" content="Problemas resueltos de electromagnetismo con solución paso a paso y un quiz de conceptos.">
+<script>try{var t=localStorage.getItem("cc-tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/estilo.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/comun.js"></script>
+<style>
+.filtros{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:18px}
+.grupo{margin-bottom:26px;scroll-margin-top:84px}
+.grupo h2{font-size:1.3rem;font-weight:800;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.grupo h2 i{font-style:normal;width:30px;height:30px;border-radius:10px;display:grid;place-items:center;
+  background:var(--u);color:#fff;font-size:.95rem}
+.probs{display:grid;gap:12px}
+.prob{padding:18px 20px;display:grid;gap:10px}
+.prob-cab{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.ref{font-weight:800;font-size:.8rem;color:var(--u);background:var(--u-sv);padding:3px 9px;border-radius:8px}
+.prob h3{font-size:1.05rem;font-weight:700;flex:1 1 300px}
+.prob>p{color:var(--ink2);font-size:.95rem}
+details{border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+details summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.9rem;list-style:none;display:flex;
+  align-items:center;gap:8px;color:var(--ink2)}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"▸";transition:transform .2s ease;color:var(--u)}
+details[open] summary::before{transform:rotate(90deg)}
+details[open] summary{color:var(--ink)}
+.det{padding:0 16px 14px}
+.det ol{margin:0;padding-left:1.2em;display:grid;gap:6px}
+.det .res{font-size:1.05rem}
+.detalles{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+
+/* quiz */
+.quiz{padding:24px;display:grid;gap:16px;max-width:780px}
+.q-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-weight:700;color:var(--ink2);font-size:.9rem}
+.q-barra{height:8px;border-radius:99px;background:var(--bg2);overflow:hidden}
+.q-barra i{display:block;height:100%;background:linear-gradient(90deg,var(--menta),var(--pri));transition:width .3s ease}
+.q-preg{font-family:var(--f-tit);font-size:1.3rem;font-weight:700;line-height:1.3}
+.q-ops{display:grid;gap:10px}
+.q-ops button{all:unset;box-sizing:border-box;cursor:pointer;padding:13px 16px;border-radius:12px;border:1.5px solid var(--line);
+  background:var(--bg);display:flex;gap:12px;align-items:center;font-weight:600}
+.q-ops button:focus-visible{outline:2.5px solid var(--pri);outline-offset:2px}
+.q-ops button:hover:not([disabled]){border-color:var(--pri)}
+.q-ops button b{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--bg2);flex:none;font-size:.85rem}
+.q-ops button.bien{border-color:var(--menta);background:var(--menta-sv)}
+.q-ops button.bien b{background:var(--menta);color:#fff}
+.q-ops button.mal{border-color:var(--coral);background:var(--coral-sv)}
+.q-ops button.mal b{background:var(--coral);color:#fff}
+.q-ops button[disabled]{cursor:default}
+.q-fin{text-align:center;display:grid;gap:12px;justify-items:center;padding:10px 0}
+.q-fin .gran{font-family:var(--f-tit);font-size:3.2rem;font-weight:800;line-height:1}
+</style>
+</head>
+<body>
+<a class="salta" href="#contenido">Saltar al contenido</a>
+<header id="cabecera"></header>
+
+<main id="contenido">
+  <section class="heroe" style="padding-bottom:18px">
+    <div class="env">
+      <span class="ceja">Práctica</span>
+      <h1>Problemas resueltos <span>y quiz</span></h1>
+      <p class="lead">Lee el enunciado, intenta resolverlo y solo después abre el resultado. Si te atascas,
+        la solución paso a paso está justo debajo.</p>
+      <div class="acciones"><a class="btn pri" href="#quiz">Ir al quiz de conceptos →</a></div>
+    </div>
+  </section>
+
+  <div class="env">
+    <div class="filtros">
+      <div class="seg" id="filtro" role="group" aria-label="Filtrar por unidad">
+        <button type="button" data-f="" aria-pressed="true">Todas</button>
+        <button type="button" data-f="u1" aria-pressed="false">U1</button>
+        <button type="button" data-f="u3" aria-pressed="false">U3</button>
+        <button type="button" data-f="u4" aria-pressed="false">U4</button>
+        <button type="button" data-f="u5" aria-pressed="false">U5</button>
+        <button type="button" data-f="u6" aria-pressed="false">U6</button>
+      </div>
+      <button type="button" class="btn sec peq" id="abrir-todo">Abrir todas las soluciones</button>
+    </div>
+
+    <!-- U1 -->
+    <section class="grupo c-u1" id="u1"><h2><i>1</i>Carga y materia</h2><div class="probs">
+      <article class="tarjeta prob"><div class="prob-cab"><span class="ref">SP21</span>
+        <h3>Fuerza de un hilo finito sobre una carga</h3></div>
+        <p>Un hilo recto de largo \(2L\) tiene densidad uniforme \(\lambda\). Halla la fuerza sobre una carga \(q\)
+          situada sobre la mediatriz del hilo, a distancia \(D\) de su centro.</p>
+        <div class="detalles">
+          <details><summary>Resultado</summary><div class="det res">\(\displaystyle F=\frac{2kq\lambda L}{D\sqrt{D^2+L^2}}\), perpendicular al hilo.</div></details>
+          <details><summary>Solución paso a paso</summary><div class="det"><ol>
+            <li>Trocito \(dq=\lambda\,dx\) a distancia \(r=\sqrt{x^2+D^2}\).</li>
+            <li>Por simetría solo queda la componente perpendicular: \(dF=kq\lambda D\,dx/r^3\).</li>
+            <li>Integrar de \(-L\) a \(L\): \(\int dx/(x^2+D^2)^{3/2}=2L/(D^2\sqrt{L^2+D^2})\).</li>
+            <li>Desarrollo completo en la <a href="demostraciones.html#coulomb">demostración del hilo</a>.</li></ol></div></details>
+        </div></article>
+      <article class="tarjeta prob"><div class="prob-cab"><span class="ref">S1P46</span>
+        <h3>Dos esferas colgadas que se repelen</h3></div>
+        <p>Dos esferitas de cobre iguales, de masa \(m\) y carga \(q\), cuelgan de hilos de largo \(l\) desde el
+          mismo punto. Para ángulos pequeños, halla su separación \(x\).</p>
+        <div class="detalles">
+          <details><summary>Resultado</summary><div class="det res">\(\displaystyle x=\left(\frac{l\,q^2}{2\pi\varepsilon_0\,mg}\right)^{1/3}\)</div></details>
+          <details><summary>Solución paso a paso</summary><div class="det"><ol>
+            <li>Equilibrio: \(T\cos\theta=mg\) y \(T\sin\theta=F_e\), así que \(\tan\theta=F_e/mg\).</li>
+            <li>Ángulo pequeño: \(\tan\theta\approx\sin\theta=\dfrac{x/2}{l}\).</li>
+            <li>Coulomb: \(F_e=kq^2/x^2\). Igualando: \(\dfrac{x}{2l}=\dfrac{kq^2}{mgx^2}\).</li>
+            <li>\(x^3=\dfrac{2klq^2}{mg}=\dfrac{lq^2}{2\pi\varepsilon_0mg}\).</li></ol></div></details>
+        </div></article>
+    </div></section>
+
+    <!-- U3 -->
+    <section class="grupo c-u3" id="u3"><h2><i>3</i>Ley de Gauss</h2><div class="probs">
+      <article class="tarjeta prob"><div class="prob-cab"><span class="ref">S1P13</span>
+        <h3>Densidad de un hilo a partir de una velocidad</h3></div>
+        <p>Una partícula de masa \(m\) y carga \(q\) parte del reposo a distancia \(a\) de un hilo infinito con
+          densidad \(\lambda\) (mismo signo) y llega a \(2a\) con rapidez \(v_0\). Halla \(\lambda\).</p>
+        <div class="detalles">
+          <details><summary>Resultado</summary><div class="det res">\(\displaystyle \lambda=\frac{\pi\varepsilon_0\,m\,v_0^2}{q\ln 2}\)</div></details>
+          <details><summary>Solución paso a paso</summary><div class="det"><ol>
+            <li>Gauss con un cilindro: \(E=\lambda/(2\pi\varepsilon_0r)\).</li>
+            <li>\(V(a)-V(2a)=\int_a^{2a}E\,dr=\dfrac{\lambda}{2\pi\varepsilon_0}\ln 2\).</li>
+            <li>Energía: \(q\,[V(a)-V(2a)]=\tfrac12mv_0^2\).</li>
+            <li>Despejar \(\lambda\).</li></ol></div></details>
+        </div></article>
+      <article class="tarjeta prob"><div class="prob-cab"><span class="ref">S1P6</span>
+        <h3>La nube electrónica del hidrógeno</h3></div>
+        <p>En el átomo de hidrógeno, la carga del electrón se reparte como \(\rho(r)=\rho_0e^{-2r/a_0}\). Halla
+          (a) \(\rho_0\), (b) la carga dentro del radio de Bohr y (c) el campo de la nube a distancia \(r\).</p>
+        <div class="detalles">
+          <details><summary>Resultados</summary><div class="det res">
+            (a) \(\rho_0=-\dfrac{e}{\pi a_0^3}\)<br>
+            (b) \(q(a_0)=-e\,(1-5e^{-2})\approx-0{,}323\,e\)<br>
+            (c) \(E=-\dfrac{e}{4\pi\varepsilon_0r^2}\Big[1-e^{-2r/a_0}\Big(1+\dfrac{2r}{a_0}+\dfrac{2r^2}{a_0^2}\Big)\Big]\)</div></details>
+          <details><summary>Solución paso a paso</summary><div class="det"><ol>
+            <li>(a) \(\int_0^\infty\rho_0e^{-2r/a_0}4\pi r^2dr=\rho_0\pi a_0^3=-e\).</li>
+            <li>(b) Integrando hasta \(r\): \(q(r)=-e\big[1-e^{-2r/a_0}(1+2r/a_0+2r^2/a_0^2)\big]\); en \(r=a_0\) el paréntesis vale 5.</li>
+            <li>(c) Gauss con una esfera: \(E\cdot4\pi r^2=q(r)/\varepsilon_0\).</li>
+            <li>Si se suma el protón (\(+e\)), el átomo completo da \(E=\dfrac{e\,e^{-2r/a_0}}{4\pi\varepsilon_0r^2}\big(1+\tfrac{2r}{a_0}+\tfrac{2r^2}{a_0^2}\big)\), que se anula lejos: el átomo es neutro.</li></ol></div></details>
+        </div></article>
+    </div></section>
+
+    <!-- U4 -->
+    <section class="grupo c-u4" id="u4"><h2><i>4</i>Potencial y energía</h2><div class="probs">
+      <article class="tarjeta prob"><div class="prob-cab"><span class="ref">S2P1</span>
+        <h3>Potencial dentro de una esfera no uniforme</h3></div>
+        <p>Una esfera de radio \(R\) tiene densidad \(\rho(r)=\rho_0\,r/R\). Halla el potencial en su interior.</p>
+        <div class="detalles">
+          <details><summary>Resultado</summary><div class="det res">\(\displaystyle V_I=\frac{\rho_0R^2}{4\varepsilon_0}-\frac{\rho_0}{4R\varepsilon_0}\cdot\frac{r^3-R^3}{3}\)</div></details>
+          <details><summary>Solución paso a paso</summary><div class="det"><ol>
+            <li>Carga total: \(Q=\int_0^R\rho_0\frac{r}{R}4\pi r^2dr=\pi\rho_0R^3\).</li>
+            <li>Fuera: \(V=kQ/r\), así que \(V(R)=\rho_0R^2/(4\varepsilon_0)\).</li>
+            <li>Dentro (Gauss): \(E=\dfrac{\rho_0r^2}{4\varepsilon_0R}\).</li>
+            <li>\(V(r)=V(R)+\int_r^RE\,dr\).</li></ol></div></details>
+        </div></article>
+      <article class="tarjeta prob"><div class="prob-cab"><span class="ref">S2P17</span>
+        <h3>Energía de armado de una esfera uniforme</h3></div>
+        <p>¿Cuánta energía cuesta juntar una carga \(Q\) en una esfera uniforme de radio \(R_0\)?</p>
+        <div class="detalles">
+          <details><summary>Resultado</summary><div class="det res">\(\displaystyle U=\frac{3kQ^2}{5R_0}\)</div></details>
+          <details><summary>Solución paso a paso</summary><div class="det"><ol>
+            <li>Traer capas \(dq\) contra la carga ya armada \(q(r)=Qr^3/R_0^3\).</li>
+            <li>\(dU=kq(r)\,dq/r\) e integrar de 0 a \(R_0\).</li>
+            <li>Desarrollo completo en la <a href="demostraciones.html#esfera">demostración de la esfera</a>.</li></ol></div></details>
+        </div></article>
+      <article class="tarjeta prob"><div class="prob-cab"><span class="ref">S2P38</span>
+        <h3>Potencial en el eje de un anillo</h3></div>
+        <p>Un anillo de radio \(a\) tiene carga \(Q\). Halla \(V\) en un punto de su eje a distancia \(x\).</p>
+        <div class="detalles">
+          <details><summary>Resultado</summary><div class="det res">\(\displaystyle V(x)=\frac{kQ}{\sqrt{x^2+a^2}}\)</div></details>
+          <details><summary>Solución paso a paso</summary><div class="det"><ol>
+            <li>Todos los \(dq\) están a la misma distancia \(\sqrt{x^2+a^2}\).</li>
+            <li>\(V=\int k\,dq/r\) y la distancia sale de la integral.</li>
+            <li>Ver la <a href="demostraciones.html#anillo">demostración del anillo</a>.</li></ol></div></details>
+        </div></article>
+      <article class="tarjeta prob"><div class="prob-cab"><span class="ref">S2P39</span>
+        <h3>Oscilación en el centro del anillo</h3></div>
+        <p>Una carga \(q\) de signo opuesto a \(Q\) y masa \(m\) se aparta un poco del centro del anillo a lo
+          largo del eje. Halla la frecuencia de oscilación.</p>
+        <div class="detalles">
+          <details><summary>Resultado</summary><div class="det res">\(\displaystyle \nu=\frac{1}{2\pi}\sqrt{\frac{k|Qq|}{ma^3}}\)</div></details>
+          <details><summary>Solución paso a paso</summary><div class="det"><ol>
+            <li>\(E_x=-dV/dx=kQx/(x^2+a^2)^{3/2}\approx kQx/a^3\) si \(|x|\ll a\).</li>
+            <li>Fuerza restauradora \(F=-k|Qq|x/a^3\): ley de Hooke.</li>
+            <li>\(\omega^2=k|Qq|/(ma^3)\) y \(\nu=\omega/2\pi\).</li></ol></div></details>
+        </div></article>
+      <article class="tarjeta prob"><div class="prob-cab"><span class="ref">S2P21</span>
+        <h3>Energía de cuatro cargas en un rectángulo</h3></div>
+        <p>Cuatro cargas puntuales en las esquinas de un rectángulo (valores y medidas del enunciado de la guía).
+          Halla la energía necesaria para armar la configuración.</p>
+        <div class="detalles">
+          <details><summary>Resultado</summary><div class="det res">\(E_{p,el}\approx-3{,}96\ \text{J}\)</div></details>
+          <details><summary>Método</summary><div class="det"><ol>
+            <li>Hay \(\binom42=6\) pares: 4 lados y 2 diagonales.</li>
+            <li>\(E_p=\sum_{i&lt;j}kq_iq_j/r_{ij}\), con \(r=\sqrt{a^2+b^2}\) para las diagonales.</li>
+            <li>El signo negativo indica que el sistema está ligado: habría que dar 3,96 J para separarlo.</li></ol></div></details>
+        </div></article>
+      <article class="tarjeta prob"><div class="prob-cab"><span class="ref">S2P35</span>
+        <h3>Forma de las equipotenciales del dipolo</h3></div>
+        <p>Muy lejos de un dipolo de momento \(p\), ¿qué forma tienen las superficies de potencial \(V\) constante?</p>
+        <div class="detalles">
+          <details><summary>Resultado</summary><div class="det res">\(r^2=b\cos\theta\), con \(b=kp/V\)</div></details>
+          <details><summary>Solución paso a paso</summary><div class="det"><ol>
+            <li>Dipolo lejano: \(V=kp\cos\theta/r^2\).</li>
+            <li>Fijando \(V\): \(r^2=(kp/V)\cos\theta\). Son superficies cerradas que pasan por el dipolo.</li></ol></div></details>
+        </div></article>
+    </div></section>
+
+    <!-- U5 -->
+    <section class="grupo c-u5" id="u5"><h2><i>5</i>Condensadores y dieléctricos</h2><div class="probs">
+      <article class="tarjeta prob"><div class="prob-cab"><span class="ref">S3P36</span>
+        <h3>Energía de una esfera de densidad uniforme</h3></div>
+        <p>Calcula la energía almacenada en el campo de una esfera de radio \(R\) y densidad \(\rho\) uniforme.
+          ¿Qué fracción está dentro de la esfera?</p>
+        <div class="detalles">
+          <details><summary>Resultado</summary><div class="det res">\(\displaystyle U=\frac{4\pi\rho^2R^5}{15\varepsilon_0}=\frac{3kQ^2}{5R}\); dentro queda \(1/6\).</div></details>
+          <details><summary>Solución paso a paso</summary><div class="det"><ol>
+            <li>\(u=\tfrac12\varepsilon_0E^2\) con \(E=\rho r/(3\varepsilon_0)\) dentro y \(kQ/r^2\) fuera.</li>
+            <li>\(U_{\text{dentro}}=kQ^2/(10R)\), \(U_{\text{fuera}}=kQ^2/(2R)\).</li>
+            <li>Con \(Q=\tfrac43\pi R^3\rho\) se llega a la primera forma. Ver la <a href="demostraciones.html#esfera">demostración</a>.</li></ol></div></details>
+        </div></article>
+      <article class="tarjeta prob"><div class="prob-cab"><span class="ref">S3P31</span>
+        <h3>Condensador con dieléctrico K = 5 a 300 V</h3></div>
+        <p>(a–f) Condensador de placas con \(K=5\) conectado a \(\Delta V=300\) V. (g) Lo mismo, pero esférico,
+          con radios de 12 cm y 15 cm.</p>
+        <div class="detalles">
+          <details><summary>Resultados</summary><div class="det res">
+            Placas: \(C_K=55{,}3\ \text{pF}\), \(Q=16{,}6\ \text{nC}\), \(U=2{,}49\ \mu\text{J}\)<br>
+            Esférico: \(C_K=334\ \text{pF}\), \(Q=100\ \text{nC}\), \(U=15{,}0\ \mu\text{J}\)</div></details>
+          <details><summary>Solución paso a paso</summary><div class="det"><ol>
+            <li>\(C_K=KC_0\). Esférico: \(C_0=4\pi\varepsilon_0ab/(b-a)=66{,}8\ \text{pF}\).</li>
+            <li>\(Q=C_K\Delta V\) y \(U=\tfrac12C_K\Delta V^2\).</li>
+            <li>Compruébalo en la <a href="simuladores.html#condensador">calculadora de condensadores</a>.</li></ol></div></details>
+        </div></article>
+      <article class="tarjeta prob"><div class="prob-cab"><span class="ref">S3P2</span>
+        <h3>Carga dentro de un cascarón dieléctrico</h3></div>
+        <p>Una carga \(q_0\) está en el centro de un cascarón esférico de dieléctrico \(K\). Halla el campo en
+          todas partes.</p>
+        <div class="detalles">
+          <details><summary>Resultado</summary><div class="det res">\(\displaystyle E=\frac{q_0}{4\pi\varepsilon_0r^2}\) en el vacío, y dividido entre \(K\) dentro del dieléctrico.</div></details>
+          <details><summary>Solución paso a paso</summary><div class="det"><ol>
+            <li>Gauss para \(\vec D\): solo cuenta la carga libre, \(D\cdot4\pi r^2=q_0\).</li>
+            <li>\(E=D/\varepsilon\), con \(\varepsilon=K\varepsilon_0\) en el dieléctrico y \(\varepsilon_0\) fuera.</li></ol></div></details>
+        </div></article>
+    </div></section>
+
+    <!-- U6 -->
+    <section class="grupo c-u6" id="u6"><h2><i>6</i>Corriente y circuitos</h2><div class="probs">
+      <article class="tarjeta prob"><div class="prob-cab"><span class="ref">S3P20</span>
+        <h3>Resistencia de un tronco de cono</h3></div>
+        <p>Un conductor de resistividad \(\rho\) tiene forma de tronco de cono de largo \(L\) y radios \(a\) y
+          \(b\) en sus extremos. Halla su resistencia.</p>
+        <div class="detalles">
+          <details><summary>Resultado</summary><div class="det res">\(\displaystyle R=\frac{\rho L}{\pi ab}\)</div></details>
+          <details><summary>Solución paso a paso</summary><div class="det"><ol>
+            <li>Radio a distancia \(x\): \(r(x)=a+(b-a)x/L\).</li>
+            <li>Rebanadas en serie: \(dR=\rho\,dx/(\pi r^2)\).</li>
+            <li>\(R=\dfrac{\rho L}{\pi(b-a)}\Big(\dfrac1a-\dfrac1b\Big)=\dfrac{\rho L}{\pi ab}\).</li></ol></div></details>
+        </div></article>
+      <article class="tarjeta prob"><div class="prob-cab"><span class="ref">S3P15</span>
+        <h3>Tubo cilíndrico con corriente radial</h3></div>
+        <p>(a) Un tubo de radios \(a\) y \(b\) y largo \(L\) conduce corriente en dirección radial. Halla \(R\).
+          (b) Filamento de carbón con \(a=0{,}4\) cm, \(b=3\) cm, \(L=30\) cm.</p>
+        <div class="detalles">
+          <details><summary>Resultados</summary><div class="det res">
+            (a) \(\displaystyle R=\frac{\rho\ln(b/a)}{2\pi L}\) &nbsp; (b) \(R\approx37{,}4\ \mu\Omega\)</div></details>
+          <details><summary>Solución paso a paso</summary><div class="det"><ol>
+            <li>Cascarones en serie: \(dR=\rho\,dr/(2\pi rL)\).</li>
+            <li>Integrar de \(a\) a \(b\).</li>
+            <li>(b) Con \(\rho_{\text{carbón}}=3{,}5\times10^{-5}\ \Omega\cdot\text{m}\): \(R=3{,}5\times10^{-5}\cdot\ln 7{,}5/(2\pi\cdot0{,}3)\).</li></ol></div></details>
+        </div></article>
+      <article class="tarjeta prob"><div class="prob-cab"><span class="ref">S3P12</span>
+        <h3>Lectura del amperímetro</h3></div>
+        <p>En el circuito del enunciado de la guía, halla la corriente total y la que marca el amperímetro.</p>
+        <div class="detalles">
+          <details><summary>Resultado</summary><div class="det res">\(I\approx0{,}690\ \text{A}\), \(I_A\approx0{,}276\ \text{A}\)</div></details>
+          <details><summary>Método</summary><div class="det"><ol>
+            <li>Reducir las resistencias en serie y paralelo hasta una \(R_{eq}\).</li>
+            <li>\(I=\varepsilon/R_{eq}\) y repartir la corriente con el divisor de corriente.</li>
+            <li>Si hay más de una fuente, usar las leyes de Kirchhoff con el criterio de la figura 6.1.</li></ol></div></details>
+        </div></article>
+      <article class="tarjeta prob"><div class="prob-cab"><span class="ref">S3P19</span>
+        <h3>Constante de tiempo de un circuito RC</h3></div>
+        <p>En el circuito del enunciado de la guía, halla la constante de tiempo y el voltaje final en el
+          condensador de 3 μF.</p>
+        <div class="detalles">
+          <details><summary>Resultado</summary><div class="det res">\(\tau=12\ \mu\text{s}\), \(\Delta V_1\approx5{,}06\ \text{V}\)</div></details>
+          <details><summary>Método</summary><div class="det"><ol>
+            <li>\(\tau=R_{eq}C_{eq}\), con la resistencia vista por los condensadores.</li>
+            <li>Condensadores en serie tienen la misma carga: el voltaje se reparte en proporción a \(1/C\).</li>
+            <li>Mira cómo cambia la curva con τ en el <a href="simuladores.html#rc">simulador RC</a>.</li></ol></div></details>
+        </div></article>
+      <article class="tarjeta prob"><div class="prob-cab"><span class="ref">S3P17</span>
+        <h3>Las tres resistencias de un cuarto de anillo</h3></div>
+        <p>Un cuarto de anillo de radios \(a\) y \(b\), espesor \(t\) y conductividad \(\sigma\). Halla la
+          resistencia (1) a través del espesor, (2) en dirección radial y (3) entre sus extremos planos.</p>
+        <div class="detalles">
+          <details><summary>Resultados</summary><div class="det res">
+            (1) \(\dfrac{4t}{\sigma\pi(b^2-a^2)}\) &nbsp; (2) \(\dfrac{2\ln(b/a)}{\pi t\sigma}\) &nbsp; (3) \(\dfrac{\pi}{2\sigma t\ln(b/a)}\)</div></details>
+          <details><summary>Solución paso a paso</summary><div class="det"><ol>
+            <li>(1) Área \(\pi(b^2-a^2)/4\), largo \(t\): \(R=t/(\sigma A)\).</li>
+            <li>(2) Arcos en serie: \(dR=dr/(\sigma\,t\,\pi r/2)\).</li>
+            <li>(3) Tiras en paralelo: \(dG=\sigma\,t\,dr/(\pi r/2)\), así que \(G=2\sigma t\ln(b/a)/\pi\).</li></ol></div></details>
+        </div></article>
+    </div></section>
+
+    <!-- QUIZ -->
+    <section class="seccion" id="quiz" style="scroll-margin-top:70px">
+      <div class="sec-cab"><h2>Quiz de conceptos</h2>
+        <p>12 preguntas rápidas. Cada respuesta trae su explicación. <span id="mejor"></span></p></div>
+      <div class="tarjeta quiz" id="quiz-caja" aria-live="polite"></div>
+    </section>
+  </div>
+</main>
+
+<footer id="pie"></footer>
+
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+  /* ---- filtro y abrir todo ---- */
+  var grupos=[].slice.call(document.querySelectorAll(".grupo")),
+      bs=[].slice.call(document.querySelectorAll("#filtro button"));
+  bs.forEach(function(b){ b.addEventListener("click",function(){
+    bs.forEach(function(x){ x.setAttribute("aria-pressed",String(x===b)); });
+    grupos.forEach(function(g){ g.hidden=!!b.dataset.f&&g.id!==b.dataset.f; });
+  }); });
+  var abierto=false, ab=document.getElementById("abrir-todo");
+  ab.addEventListener("click",function(){
+    abierto=!abierto;
+    [].forEach.call(document.querySelectorAll(".prob details"),function(d){ d.open=abierto; });
+    ab.textContent=abierto?"Cerrar todas las soluciones":"Abrir todas las soluciones";
+  });
+
+  /* ---- quiz ---- */
+  var P=[
+    ["Si duplicas la distancia entre dos cargas, la fuerza entre ellas…",
+     ["se reduce a la mitad","se reduce a la cuarta parte","se duplica","no cambia"],1,
+     "Coulomb va como \\(1/r^2\\): con \\(2r\\) la fuerza queda dividida entre \\(2^2=4\\)."],
+    ["¿Por qué dos líneas de campo eléctrico nunca se cruzan?",
+     ["Porque se repelen entre sí","Porque en cada punto el campo tiene una sola dirección","Porque siempre son paralelas","Sí pueden cruzarse cerca de las cargas"],1,
+     "Si se cruzaran, en ese punto habría dos direcciones para \\(\\vec E\\), lo cual es imposible."],
+    ["Una carga q está dentro de una esfera de radio r. Si cambias la esfera por otra de radio 2r, el flujo…",
+     ["se reduce a la cuarta parte","se duplica","es el mismo","se cuadruplica"],2,
+     "El flujo solo depende de la carga encerrada: \\(\\Phi=q/\\varepsilon_0\\), sin importar el tamaño."],
+    ["Dentro de un conductor en equilibrio electrostático, el campo eléctrico es…",
+     ["máximo en el centro","cero","igual al de afuera","radial hacia afuera"],1,
+     "Si hubiera campo, los electrones libres se moverían. En equilibrio no se mueven, así que \\(E=0\\)."],
+    ["¿Qué ángulo forman las líneas de campo con las superficies equipotenciales?",
+     ["0°","45°","90°","Depende de la carga"],2,
+     "Moverse sobre una equipotencial no cambia \\(V\\): \\(\\vec E\\cdot d\\vec r=0\\), así que son perpendiculares."],
+    ["En el centro de un anillo cargado uniformemente…",
+     ["E = 0 y V = 0","E = 0 y V ≠ 0","E ≠ 0 y V = 0","E ≠ 0 y V ≠ 0"],1,
+     "Los campos de puntos opuestos se cancelan, pero los potenciales (escalares) se suman: \\(V=kQ/a\\)."],
+    ["Un condensador cargado se desconecta de la batería y se le mete un dieléctrico K. Su energía…",
+     ["sube K veces","baja K veces","no cambia","sube K² veces"],1,
+     "Con \\(Q\\) fijo, \\(U=Q^2/2C\\) y \\(C\\) sube \\(K\\) veces, así que \\(U\\) baja \\(K\\) veces."],
+    ["Dos condensadores iguales de capacidad C se conectan en serie. La capacidad equivalente es…",
+     ["2C","C","C/2","C²"],2,
+     "En serie se suman los inversos: \\(1/C_{eq}=1/C+1/C=2/C\\)."],
+    ["Al cargar un condensador por una resistencia R, ¿qué fracción de la energía de la fuente queda en el condensador?",
+     ["Toda","La mitad, sea cual sea R","Depende de R","Un 63 %"],1,
+     "La fuente entrega \\(C\\varepsilon^2\\) y el condensador guarda \\(\\tfrac12C\\varepsilon^2\\). La otra mitad se va en calor, para cualquier \\(R\\)."],
+    ["En un circuito RC que se carga, ¿qué porcentaje de la carga final hay en t = τ?",
+     ["50 %","63 %","86 %","100 %"],1,
+     "\\(q(\\tau)/q_f=1-e^{-1}\\approx0{,}632\\)."],
+    ["Si un cable tiene el doble de largo y el doble de diámetro, su resistencia…",
+     ["se duplica","no cambia","se reduce a la mitad","se reduce a la cuarta parte"],2,
+     "\\(R=\\rho L/A\\): el largo dobla \\(R\\) y el área sube 4 veces. En total, \\(R\\) queda dividida entre 2."],
+    ["Si duplicas la carga Q de una esfera uniforme sin cambiar su radio, la energía de armado…",
+     ["se duplica","se cuadruplica","no cambia","se reduce a la mitad"],1,
+     "\\(U=3kQ^2/5R\\) va como \\(Q^2\\)."]
+  ];
+  var caja=document.getElementById("quiz-caja"), orden, i, puntos, LET="ABCD";
+  function mejor(){
+    var m=CC.leer("cc-quiz"); document.getElementById("mejor").textContent=m?"Tu mejor resultado: "+m+" de "+P.length+".":"";
+  }
+  function empezar(){
+    orden=P.map(function(_,k){return k;}).sort(function(){return Math.random()-.5;});
+    i=0; puntos=0; pregunta();
+  }
+  function pregunta(){
+    var p=P[orden[i]], ops=p[1].map(function(o,k){ return [o,k]; }).sort(function(){ return Math.random()-.5; });
+    caja.innerHTML='<div class="q-top"><span>Pregunta '+(i+1)+' de '+P.length+'</span><span>Aciertos: '+puntos+'</span></div>'+
+      '<div class="q-barra"><i style="width:'+(100*i/P.length)+'%"></i></div>'+
+      '<p class="q-preg">'+p[0]+'</p><div class="q-ops">'+
+      ops.map(function(o,pos){ return '<button type="button" data-k="'+o[1]+'"><b>'+LET[pos]+'</b><span>'+o[0]+'</span></button>'; }).join("")+
+      '</div><div id="q-exp"></div>';
+    [].forEach.call(caja.querySelectorAll(".q-ops button"),function(b){ b.addEventListener("click",function(){ responder(+b.dataset.k); }); });
+    CC.math(caja);
+  }
+  function responder(k){
+    var p=P[orden[i]], ok=k===p[2]; if(ok) puntos++;
+    [].forEach.call(caja.querySelectorAll(".q-ops button"),function(b){
+      var j=+b.dataset.k; b.disabled=true;
+      if(j===p[2]) b.classList.add("bien"); else if(j===k) b.classList.add("mal");
+    });
+    var ex=document.getElementById("q-exp");
+    ex.innerHTML='<p class="nota '+(ok?'idea':'alerta')+'"><b>'+(ok?'¡Correcto!':'Casi.')+'</b> '+p[3]+'</p>'+
+      '<div class="acciones" style="margin-top:14px"><button type="button" class="btn pri" id="q-sig">'+(i<P.length-1?'Siguiente →':'Ver resultado')+'</button></div>';
+    CC.math(ex);
+    var s=document.getElementById("q-sig"); s.focus();
+    s.addEventListener("click",function(){ i++; if(i<P.length) pregunta(); else fin(); });
+  }
+  function fin(){
+    var m=+(CC.leer("cc-quiz")||0); if(puntos>m) CC.guardar("cc-quiz",String(puntos)); mejor();
+    var msg=puntos===P.length?"¡Perfecto! Dominas los conceptos.":puntos>=9?"¡Muy bien! Repasa las que fallaste.":puntos>=6?"Vas bien. Vuelve a la teoría de los temas que fallaste.":"Toca repasar: empieza por la página de teoría.";
+    caja.innerHTML='<div class="q-fin"><span class="chip-u c-u4">Resultado</span><div class="gran">'+puntos+' / '+P.length+'</div>'+
+      '<p>'+msg+'</p><div class="acciones"><button type="button" class="btn pri" id="q-otra">Intentar de nuevo</button>'+
+      '<a class="btn sec" href="teoria.html">Ir a la teoría</a></div></div>';
+    document.getElementById("q-otra").addEventListener("click",empezar);
+  }
+  mejor(); empezar();
+});
+</script>
+</body>
+</html>

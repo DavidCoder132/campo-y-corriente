@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Laboratorios · Campo y Corriente</title>
+<meta name="description" content="Tres prácticas de laboratorio: curvas equipotenciales, osciloscopio y curvas características V–I.">
+<script>try{var t=localStorage.getItem("cc-tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/estilo.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/comun.js"></script>
+<style>
+.lab{padding:24px;display:grid;gap:18px;margin-bottom:22px;scroll-margin-top:84px}
+.lab-cab{display:flex;gap:16px;align-items:flex-start}
+.lab-cab>div{min-width:0}
+.lab-n{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;flex:none;
+  font-family:var(--f-tit);font-weight:800;font-size:1.3rem;background:var(--u);color:#fff}
+.lab-cab h2{font-size:1.6rem;font-weight:800}
+.lab-cab p{color:var(--ink2);margin-top:4px}
+.cols{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))}
+.bloque{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.bloque h3{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--u);margin-bottom:10px}
+.bloque ol,.bloque ul{margin:0;padding-left:1.2em;display:grid;gap:6px;font-size:.94rem}
+.checklist{list-style:none;padding:0!important}
+.checklist label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.checklist input{width:18px;height:18px;margin-top:3px;accent-color:var(--u);flex:none}
+.checklist input:checked+span{text-decoration:line-through;color:var(--ink2)}
+details{border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+details summary{cursor:pointer;padding:11px 14px;font-weight:700;font-size:.93rem}
+details>div{padding:0 16px 14px;color:var(--ink2);font-size:.93rem}
+.vi{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(240px,1fr);gap:18px;align-items:start}
+.vi canvas{width:100%;aspect-ratio:16/10;border-radius:14px;background:var(--bg);border:1px solid var(--line);display:block}
+.vi .panel{display:grid;gap:12px}
+.datos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.dato{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.dato span{display:block;font-size:.74rem;font-weight:700;color:var(--ink2)}
+.dato b{font-family:var(--f-tit);font-size:1.05rem;font-variant-numeric:tabular-nums}
+@media (max-width:820px){.vi{grid-template-columns:1fr}.lab{padding:18px}}
+</style>
+</head>
+<body>
+<a class="salta" href="#contenido">Saltar al contenido</a>
+<header id="cabecera"></header>
+
+<main id="contenido">
+  <section class="heroe" style="padding-bottom:18px">
+    <div class="env">
+      <span class="ceja">Prácticas</span>
+      <h1>Laboratorios <span>del curso</span></h1>
+      <p class="lead">Tres prácticas que cierran el círculo entre la teoría y el instrumento. Usa la lista de
+        pasos como guía en el laboratorio: tus marcas se guardan en este navegador.</p>
+    </div>
+  </section>
+
+  <div class="env">
+    <!-- L1 -->
+    <article class="tarjeta lab c-u4" id="l1">
+      <div class="lab-cab"><span class="lab-n">L1</span>
+        <div><h2>Curvas equipotenciales</h2><p>Cuba electrolítica · voltímetro · papel milimetrado</p></div></div>
+      <p>Se monta una capa delgada de agua con iones entre dos electrodos y se buscan con el voltímetro los puntos
+        que están al mismo potencial respecto a una referencia. Uniéndolos se dibujan las equipotenciales de tres montajes.</p>
+      <div class="cols">
+        <div class="bloque"><h3>Procedimiento</h3>
+          <ul class="checklist" data-lab="l1">
+            <li><label><input type="checkbox"><span>Colocar el papel milimetrado bajo la cuba y nivelar el agua.</span></label></li>
+            <li><label><input type="checkbox"><span>Conectar los electrodos a la fuente (pocos voltios).</span></label></li>
+            <li><label><input type="checkbox"><span>Fijar la punta de referencia del voltímetro en un electrodo.</span></label></li>
+            <li><label><input type="checkbox"><span>Buscar 8–10 puntos con el mismo voltaje y anotarlos.</span></label></li>
+            <li><label><input type="checkbox"><span>Repetir para 4–5 valores de voltaje distintos.</span></label></li>
+            <li><label><input type="checkbox"><span>Repetir con los montajes punto–punto, anillo–anillo y placa–placa.</span></label></li>
+          </ul></div>
+        <div class="bloque"><h3>Qué se comprueba</h3><ul>
+          <li>Las equipotenciales no se cortan entre sí.</li>
+          <li>Las líneas de campo las cortan siempre a 90°.</li>
+          <li>Donde están más juntas, el campo es más intenso.</li></ul></div>
+      </div>
+      <details><summary>Pregunta para el informe: ¿por qué se usa agua con iones y no agua destilada?</summary>
+        <div>El voltímetro necesita que circule una pequeña corriente. El agua destilada casi no conduce; con iones,
+          el agua se comporta como un medio resistivo uniforme y el potencial en ella reproduce el del campo electrostático.</div></details>
+      <div class="fila" style="display:flex;flex-wrap:wrap;gap:8px">
+        <a class="btn sec peq" href="teoria.html#u4">Teoría: unidad 4</a>
+        <a class="btn sec peq" href="simuladores.html#campo">Ver equipotenciales en el simulador</a></div>
+    </article>
+
+    <!-- L2 -->
+    <article class="tarjeta lab c-u6" id="l2">
+      <div class="lab-cab"><span class="lab-n">L2</span>
+        <div><h2>Osciloscopio</h2><p>Generador de señales · circuitos RC y RLC</p></div></div>
+      <p>Se usa el osciloscopio primero como instrumento de medida (amplitud, período, frecuencia y desfase) y
+        después para registrar la carga y descarga de un condensador, comparando la constante de tiempo medida con la calculada.</p>
+      <div class="cols">
+        <div class="bloque"><h3>Procedimiento</h3>
+          <ul class="checklist" data-lab="l2">
+            <li><label><input type="checkbox"><span>Calibrar el osciloscopio con la señal de prueba.</span></label></li>
+            <li><label><input type="checkbox"><span>Medir amplitud, período y frecuencia de una senoidal.</span></label></li>
+            <li><label><input type="checkbox"><span>Alimentar el RC con una onda cuadrada de período ≫ RC.</span></label></li>
+            <li><label><input type="checkbox"><span>Medir el tiempo en que \(V_C\) llega al 63 % del máximo: eso es τ.</span></label></li>
+            <li><label><input type="checkbox"><span>Comparar con \(\tau=RC\) calculado y obtener el error relativo.</span></label></li>
+            <li><label><input type="checkbox"><span>Observar el desfase en modo XY y la oscilación amortiguada del RLC.</span></label></li>
+          </ul></div>
+        <div class="bloque"><h3>Qué se mide</h3><ul>
+          <li>Amplitud, período y frecuencia de señales periódicas.</li>
+          <li>Constante de tiempo \(\tau=RC\) en la carga y la descarga.</li>
+          <li>Desfase entre dos señales y figuras de Lissajous.</li>
+          <li>Oscilación amortiguada del circuito RLC.</li></ul></div>
+      </div>
+      <details><summary>Pregunta para el informe: ¿por qué el período de la onda cuadrada debe ser mucho mayor que RC?</summary>
+        <div>Para que el condensador tenga tiempo de cargarse por completo (unos 5τ) antes de que la señal cambie. Si no,
+          la curva no llega al máximo y medir el 63 % deja de tener sentido.</div></details>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <a class="btn sec peq" href="teoria.html#u6">Teoría: unidad 6</a>
+        <a class="btn sec peq" href="simuladores.html#rc">Simulador RC</a></div>
+    </article>
+
+    <!-- L3 -->
+    <article class="tarjeta lab c-u1" id="l3">
+      <div class="lab-cab"><span class="lab-n">L3</span>
+        <div><h2>Curvas características V–I</h2><p>Voltímetro · amperímetro · fuente variable</p></div></div>
+      <p>Se varía el voltaje sobre distintos elementos y se registra la corriente para dibujar su curva V–I. La forma de
+        la curva dice si el elemento obedece la ley de Ohm o no.</p>
+      <div class="vi">
+        <canvas id="cv-vi" role="img" aria-label="Curva corriente contra voltaje del elemento elegido"></canvas>
+        <div class="panel">
+          <div class="campo"><span class="lbl">Elemento</span>
+            <div class="seg" id="vi-el">
+              <button type="button" data-e="res">Resistor</button>
+              <button type="button" data-e="foco">Foco</button>
+              <button type="button" data-e="carbon">Carbón</button>
+              <button type="button" data-e="diodo">Diodo</button>
+            </div></div>
+          <div class="campo"><label for="vi-v">Voltaje aplicado <output id="vi-v-o"></output></label>
+            <input type="range" id="vi-v" min="0" max="1" step="0.001" value="0.6"></div>
+          <div class="datos">
+            <div class="dato"><span>V</span><b id="vi-V"></b></div>
+            <div class="dato"><span>I</span><b id="vi-I"></b></div>
+            <div class="dato"><span>R = V/I</span><b id="vi-R"></b></div>
+          </div>
+          <p class="nota idea" id="vi-exp"></p>
+        </div>
+      </div>
+      <div class="cols">
+        <div class="bloque"><h3>Procedimiento</h3>
+          <ul class="checklist" data-lab="l3">
+            <li><label><input type="checkbox"><span>Montar el amperímetro en serie y el voltímetro en paralelo con el elemento.</span></label></li>
+            <li><label><input type="checkbox"><span>Subir el voltaje en pasos pequeños y anotar V e I.</span></label></li>
+            <li><label><input type="checkbox"><span>Para el diodo, medir también con polaridad invertida.</span></label></li>
+            <li><label><input type="checkbox"><span>Graficar I contra V y calcular R = V/I en varios puntos.</span></label></li>
+          </ul></div>
+        <div class="bloque"><h3>Qué se concluye</h3><ul>
+          <li>El resistor da una recta: R constante, es óhmico.</li>
+          <li>El foco se curva: su R sube al calentarse.</li>
+          <li>El carbón hace lo contrario: su R baja con la temperatura.</li>
+          <li>El diodo solo conduce en un sentido y a partir de un umbral.</li></ul></div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <a class="btn sec peq" href="teoria.html#u6">Teoría: unidad 6</a>
+        <a class="btn sec peq" href="formulario.html">Formulario</a></div>
+    </article>
+  </div>
+</main>
+
+<footer id="pie"></footer>
+
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+  /* listas de pasos que se recuerdan */
+  [].forEach.call(document.querySelectorAll(".checklist"),function(ul){
+    var clave="cc-"+ul.dataset.lab, cajas=[].slice.call(ul.querySelectorAll("input")), est=[];
+    try{ est=JSON.parse(CC.leer(clave)||"[]"); }catch(e){}
+    cajas.forEach(function(c,i){
+      c.checked=!!est[i];
+      c.addEventListener("change",function(){ CC.guardar(clave,JSON.stringify(cajas.map(function(x){return x.checked;}))); });
+    });
+  });
+
+  /* curva V–I */
+  var EL={
+    res:{vmin:0,vmax:10,f:function(v){return v/100;},
+      t:"Recta que pasa por el origen: la resistencia es la misma para cualquier voltaje. Es un elemento óhmico."},
+    foco:{vmin:0,vmax:10,f:function(v){return .06*Math.pow(v/10,.6);},
+      t:"La curva se aplana: al subir el voltaje el filamento se calienta y su resistencia aumenta. No es óhmico."},
+    carbon:{vmin:0,vmax:10,f:function(v){return v/150*(1+.06*v);},
+      t:"La curva se empina: el carbón conduce mejor caliente, así que su resistencia baja con el voltaje."},
+    diodo:{vmin:-2,vmax:.85,f:function(v){return 1e-9*(Math.exp(v/.05)-1);},
+      t:"Casi no conduce en inversa ni por debajo de unos 0,6 V; pasado el umbral, la corriente crece muy rápido."}
+  };
+  var el="res", vIn=document.getElementById("vi-v"), cv=document.getElementById("cv-vi"), cx=cv.getContext("2d");
+  var PREF={"-9":"n","-6":"µ","-3":"m","0":"","3":"k","6":"M","9":"G"};
+  function fmt(v,u){
+    if(!isFinite(v)) return "∞ "+u; if(Math.abs(v)<1e-12) return "0 "+u;
+    var e=Math.max(-9,Math.min(9,Math.floor(Math.log10(Math.abs(v))/3)*3));
+    return Number((v/Math.pow(10,e)).toPrecision(3)).toLocaleString("es")+" "+PREF[e]+u;
+  }
+  function dibuja(){
+    var r=cv.getBoundingClientRect(); if(!r.width) return;
+    var d=window.devicePixelRatio||1, W=r.width, H=r.height; cv.width=W*d; cv.height=H*d; cx.setTransform(d,0,0,d,0,0);
+    var E=EL[el], V=E.vmin+(E.vmax-E.vmin)*(+vIn.value), I=E.f(V), imax=Math.max(E.f(E.vmax),1e-6)*1.08,
+        imin=Math.min(0,E.f(E.vmin))*1.08-imax*.04, m={l:50,r:14,t:14,b:34}, w=W-m.l-m.r, h=H-m.t-m.b;
+    function X(v){ return m.l+(v-E.vmin)/(E.vmax-E.vmin)*w; }
+    function Y(i){ return m.t+h-(i-imin)/(imax-imin)*h; }
+    var c=getComputedStyle(document.documentElement), ink2=c.getPropertyValue("--ink2"), line=c.getPropertyValue("--line"), u=c.getPropertyValue("--coral");
+    cx.clearRect(0,0,W,H); cx.strokeStyle=line; cx.lineWidth=1;
+    cx.beginPath(); cx.moveTo(X(0),m.t); cx.lineTo(X(0),m.t+h); cx.moveTo(m.l,Y(0)); cx.lineTo(m.l+w,Y(0)); cx.stroke();
+    cx.fillStyle=ink2; cx.font="600 11px 'Plus Jakarta Sans',sans-serif";
+    cx.textAlign="right"; cx.textBaseline="bottom"; cx.fillText("V (voltios)",m.l+w,H-4);
+    cx.textAlign="left"; cx.textBaseline="top"; cx.fillText("I",X(0)+6,m.t);
+    cx.textAlign="center"; cx.textBaseline="top";
+    [E.vmin,(E.vmin+E.vmax)/2,E.vmax].forEach(function(v){ cx.fillText(String(+v.toFixed(2)).replace(".",","),X(v),m.t+h+6); });
+    cx.textAlign="right"; cx.textBaseline="middle"; cx.fillText(fmt(imax/1.08,"A"),m.l-6,Y(imax/1.08));
+    cx.strokeStyle=u; cx.lineWidth=3; cx.beginPath();
+    for(var k=0;k<=240;k++){ var vv=E.vmin+(E.vmax-E.vmin)*k/240, ii=E.f(vv); if(k) cx.lineTo(X(vv),Y(ii)); else cx.moveTo(X(vv),Y(ii)); }
+    cx.stroke();
+    cx.setLineDash([4,4]); cx.strokeStyle=ink2; cx.lineWidth=1;
+    cx.beginPath(); cx.moveTo(X(V),Y(0)); cx.lineTo(X(V),Y(I)); cx.lineTo(X(0),Y(I)); cx.stroke(); cx.setLineDash([]);
+    cx.fillStyle=u; cx.beginPath(); cx.arc(X(V),Y(I),6,0,7); cx.fill();
+    document.getElementById("vi-v-o").textContent=fmt(V,"V");
+    document.getElementById("vi-V").textContent=fmt(V,"V");
+    document.getElementById("vi-I").textContent=fmt(I,"A");
+    document.getElementById("vi-R").textContent=Math.abs(I)<1e-12?"∞ Ω":fmt(V/I,"Ω");
+    document.getElementById("vi-exp").textContent=E.t;
+  }
+  var bs=[].slice.call(document.querySelectorAll("#vi-el button"));
+  function marca(e){ bs.forEach(function(b){ b.setAttribute("aria-pressed",String(b.dataset.e===e)); }); }
+  bs.forEach(function(b){ b.addEventListener("click",function(){ el=b.dataset.e; marca(el); vIn.value=el==="diodo"?.95:.6; dibuja(); }); });
+  marca(el); vIn.addEventListener("input",dibuja); window.addEventListener("resize",dibuja);
+  document.addEventListener("cc-tema",dibuja); dibuja();
+});
+</script>
+</body>
+</html>

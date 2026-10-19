@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Demostraciones · Campo y Corriente</title>
+<meta name="description" content="Seis demostraciones de electromagnetismo explicadas paso a paso.">
+<script>try{var t=localStorage.getItem("cc-tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/estilo.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/comun.js"></script>
+<style>
+.selector{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(min(100%,175px),1fr));margin-bottom:22px}
+.selector button{all:unset;box-sizing:border-box;cursor:pointer;padding:14px;border-radius:14px;
+  background:var(--card);border:1.5px solid var(--line);display:flex;flex-direction:column;gap:6px;
+  transition:transform .15s ease,border-color .15s ease}
+.selector button:hover{transform:translateY(-2px);border-color:var(--u)}
+.selector button:focus-visible{outline:2.5px solid var(--pri);outline-offset:2px}
+.selector button[aria-pressed="true"]{border-color:var(--u);background:var(--u-sv)}
+.selector b{font-family:var(--f-tit);font-size:1rem;line-height:1.2}
+.selector span{font-size:.8rem;color:var(--ink2)}
+.demo{padding:24px;display:grid;gap:20px}
+.demo-cab{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;align-items:flex-start}
+.demo-cab h2{font-size:clamp(1.5rem,3.4vw,2rem);font-weight:800;margin-top:8px}
+.demo-cab p{color:var(--ink2);margin-top:6px;max-width:62ch}
+.progreso{display:flex;align-items:center;gap:12px;font-size:.86rem;color:var(--ink2);font-weight:600}
+.barra{flex:1;height:8px;border-radius:99px;background:var(--bg2);overflow:hidden;min-width:120px}
+.barra i{display:block;height:100%;background:var(--u);border-radius:99px;transition:width .3s ease}
+.pasos{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.paso{border:1px solid var(--line);border-radius:14px;padding:16px 18px 16px 62px;position:relative;background:var(--bg)}
+.paso::before{content:attr(data-n);position:absolute;left:16px;top:15px;width:32px;height:32px;border-radius:50%;
+  display:grid;place-items:center;font-family:var(--f-tit);font-weight:800;background:var(--u-sv);color:var(--u)}
+.paso h3{font-size:1.05rem;margin-bottom:6px}
+.paso p+p,.paso p+.katex-display,.paso .katex-display+p{margin-top:8px}
+.paso[hidden]{display:none}
+@media (prefers-reduced-motion:no-preference){.paso.nuevo{animation:sube .4s ease both}}
+.controles{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.cajas{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.cajas ul{margin:8px 0 0;padding-left:1.2em;display:grid;gap:4px}
+.final[hidden]{display:none}
+@media (max-width:600px){.demo{padding:16px}.paso{padding:14px 14px 14px 54px}.paso::before{left:12px}}
+</style>
+</head>
+<body>
+<a class="salta" href="#contenido">Saltar al contenido</a>
+<header id="cabecera"></header>
+
+<main id="contenido">
+  <section class="heroe" style="padding-bottom:18px">
+    <div class="env">
+      <span class="ceja">Derivaciones completas</span>
+      <h1>Demostraciones <span>paso a paso</span></h1>
+      <p class="lead">Elige una demostración y avanza un paso a la vez. Antes de pulsar «Siguiente»,
+        intenta adivinar qué viene: así se aprende de verdad.</p>
+    </div>
+  </section>
+
+  <div class="env">
+    <div class="selector" id="selector" role="group" aria-label="Elegir demostración">
+      <button type="button" class="c-u2" data-d="coulomb"><span>Unidad 1–2</span><b>Campo de un hilo finito</b></button>
+      <button type="button" class="c-u3" data-d="gauss"><span>Unidad 3</span><b>Ley de Gauss</b></button>
+      <button type="button" class="c-u4" data-d="anillo"><span>Unidad 4</span><b>Potencial del anillo</b></button>
+      <button type="button" class="c-u4" data-d="esfera"><span>Unidad 4</span><b>Energía de una esfera</b></button>
+      <button type="button" class="c-u5" data-d="capacitor"><span>Unidad 5</span><b>Energía del condensador</b></button>
+      <button type="button" class="c-u6" data-d="rc"><span>Unidad 6</span><b>Carga del circuito RC</b></button>
+    </div>
+
+    <!-- ============ HILO FINITO ============ -->
+    <article class="tarjeta demo c-u2" id="coulomb" hidden>
+      <div class="demo-cab"><div><span class="chip-u">Coulomb + superposición</span>
+        <h2>Campo de un hilo de largo 2L</h2>
+        <p>Un hilo recto de largo \(2L\) con densidad uniforme \(\lambda\). Buscamos el campo en un punto P
+          a distancia \(D\) sobre su mediatriz.</p></div></div>
+      <div class="formula-grande">\(\displaystyle E=\frac{2k\lambda L}{D\sqrt{D^2+L^2}}\)<small>Resultado</small></div>
+      <ol class="pasos">
+        <li class="paso"><h3>Cortar el hilo en trocitos</h3>
+          <p>Ponemos el hilo sobre el eje \(x\), de \(-L\) a \(L\), y el punto en \(P=(0,D)\). Un trocito
+            \(dx\) tiene carga \(dq=\lambda\,dx\) y está a una distancia \(r=\sqrt{x^2+D^2}\) de P.</p></li>
+        <li class="paso"><h3>Usar la simetría</h3>
+          <p>Por cada trocito en \(x\) hay otro en \(-x\). Sus componentes horizontales se cancelan y solo
+            sobrevive la vertical, que es la componente a lo largo de \(D/r\):</p>
+          \[dE_y=\frac{k\,\lambda\,dx}{r^2}\cdot\frac{D}{r}=\frac{k\lambda D\,dx}{(x^2+D^2)^{3/2}}\]</li>
+        <li class="paso"><h3>Plantear la integral</h3>
+          \[E=k\lambda D\int_{-L}^{L}\frac{dx}{(x^2+D^2)^{3/2}}\]
+          <p>Es una integral estándar (sale con \(x=D\tan\theta\)):
+            \(\displaystyle\int\frac{dx}{(x^2+D^2)^{3/2}}=\frac{x}{D^2\sqrt{x^2+D^2}}\).</p></li>
+        <li class="paso"><h3>Evaluar entre los límites</h3>
+          \[E=k\lambda D\left[\frac{x}{D^2\sqrt{x^2+D^2}}\right]_{-L}^{L}=k\lambda D\cdot\frac{2L}{D^2\sqrt{L^2+D^2}}\]
+          \[\boxed{E=\frac{2k\lambda L}{D\sqrt{D^2+L^2}}}\qquad F=qE\]</li>
+        <li class="paso"><h3>Comprobar con dos límites</h3>
+          <p><b>Hilo muy largo</b> (\(L\to\infty\)): \(E\to 2k\lambda/D=\lambda/(2\pi\varepsilon_0D)\), el
+            campo del hilo infinito que también da Gauss.</p>
+          <p><b>Muy lejos</b> (\(D\gg L\)): \(E\to k(2L\lambda)/D^2\), el campo de una carga puntual
+            \(Q=2L\lambda\). ¡Todo cuadra!</p></li>
+      </ol>
+      <div class="cajas final">
+        <p class="nota idea"><b>Lo que te llevas:</b> busca la simetría antes de integrar; casi siempre
+          te ahorra la mitad del trabajo.</p>
+        <div class="nota alerta"><b>Errores comunes</b><ul>
+          <li>Integrar el módulo \(dE\) sin proyectar sobre el eje.</li>
+          <li>Olvidar que \(r\) cambia con \(x\).</li></ul></div>
+      </div>
+    </article>
+
+    <!-- ============ GAUSS ============ -->
+    <article class="tarjeta demo c-u3" id="gauss" hidden>
+      <div class="demo-cab"><div><span class="chip-u">Flujo y simetría</span>
+        <h2>De Coulomb a la ley de Gauss</h2>
+        <p>Partimos del campo de una carga puntual y llegamos a que el flujo por cualquier superficie cerrada
+          solo depende de la carga encerrada.</p></div></div>
+      <div class="formula-grande">\(\displaystyle \oint_S\vec E\cdot d\vec A=\frac{q_{\text{enc}}}{\varepsilon_0}\)<small>Resultado</small></div>
+      <ol class="pasos">
+        <li class="paso"><h3>Qué es el flujo</h3>
+          <p>El flujo cuenta cuánto campo atraviesa una superficie. El vector \(d\vec A\) es normal a la
+            superficie y apunta hacia afuera:</p>
+          \[\Phi_E=\oint_S\vec E\cdot d\vec A\]</li>
+        <li class="paso"><h3>Una esfera alrededor de una carga</h3>
+          <p>Sobre una esfera de radio \(r\) centrada en \(q\), el campo es radial (paralelo a \(d\vec A\)) y
+            tiene el mismo módulo en todos lados. Sale de la integral:</p>
+          \[\Phi_E=E\oint dA=\frac{kq}{r^2}\,(4\pi r^2)=4\pi kq=\frac{q}{\varepsilon_0}\]
+          <p>El radio se cancela: el flujo no depende del tamaño de la esfera.</p></li>
+        <li class="paso"><h3>Cualquier superficie que rodee la carga</h3>
+          <p>Cada trocito de superficie «ve» la carga bajo un ángulo sólido
+            \(d\Omega=\hat r\cdot d\vec A/r^2\). Entonces \(\vec E\cdot d\vec A=kq\,d\Omega\), y el ángulo
+            sólido total alrededor de un punto siempre es \(4\pi\):</p>
+          \[\oint\vec E\cdot d\vec A=kq\oint d\Omega=4\pi kq=\frac{q}{\varepsilon_0}\]</li>
+        <li class="paso"><h3>¿Y si la carga queda afuera?</h3>
+          <p>Las líneas que entran por un lado salen por el otro: los ángulos sólidos se cancelan y el flujo
+            neto es <b>cero</b>. Las cargas externas no aportan.</p></li>
+        <li class="paso"><h3>Sumar todas las cargas</h3>
+          <p>Por superposición, el campo total es la suma de los campos, y el flujo total la suma de los
+            flujos. Solo sobreviven las cargas de adentro:</p>
+          \[\boxed{\oint_S\vec E\cdot d\vec A=\frac{q_{\text{enc}}}{\varepsilon_0}}\]</li>
+        <li class="paso"><h3>Usarla: hilo infinito</h3>
+          <p>Gaussiana: un cilindro de radio \(r\) y alto \(h\). Por las tapas no hay flujo (\(\vec E\) es
+            radial); por el costado, \(E\cdot 2\pi rh\). La carga dentro es \(\lambda h\):</p>
+          \[E\,(2\pi rh)=\frac{\lambda h}{\varepsilon_0}\;\Rightarrow\;E=\frac{\lambda}{2\pi\varepsilon_0 r}\]
+          <p>Coincide con el límite \(L\to\infty\) de la demostración del hilo finito.</p></li>
+      </ol>
+      <div class="cajas final">
+        <div class="nota idea"><b>Checklist de simetría</b><ul>
+          <li>Esférica: \(E\) depende solo de \(r\).</li>
+          <li>Cilíndrica: \(E\) depende solo de la distancia al eje.</li>
+          <li>Plano infinito: \(E\) constante a cada lado.</li></ul></div>
+        <div class="nota alerta"><b>Errores comunes</b><ul>
+          <li>Usar la carga total en lugar de \(q_{\text{enc}}\).</li>
+          <li>Elegir una gaussiana sin simetría útil.</li></ul></div>
+      </div>
+    </article>
+
+    <!-- ============ ANILLO ============ -->
+    <article class="tarjeta demo c-u4" id="anillo" hidden>
+      <div class="demo-cab"><div><span class="chip-u">Potencial → campo → oscilación</span>
+        <h2>Potencial en el eje de un anillo</h2>
+        <p>Un anillo de radio \(a\) con carga \(Q\) uniforme. Calculamos \(V\) en su eje, sacamos el campo
+          derivando y vemos por qué una carga opuesta oscila en el centro.</p></div></div>
+      <div class="formula-grande">\(\displaystyle V(x)=\frac{kQ}{\sqrt{x^2+a^2}}\qquad \nu=\frac{1}{2\pi}\sqrt{\frac{k|Qq|}{ma^3}}\)<small>Resultados</small></div>
+      <ol class="pasos">
+        <li class="paso"><h3>Todos los trocitos están a la misma distancia</h3>
+          <p>Un punto del eje a distancia \(x\) del centro está a \(r=\sqrt{x^2+a^2}\) de <b>cada</b> trocito
+            \(dq\) del anillo. Como \(V\) es un escalar, no hay que proyectar nada:</p>
+          \[V=\int\frac{k\,dq}{r}=\frac{k}{\sqrt{x^2+a^2}}\int dq=\frac{kQ}{\sqrt{x^2+a^2}}\]</li>
+        <li class="paso"><h3>El campo sale derivando</h3>
+          <p>Por simetría el campo en el eje solo tiene componente \(x\):</p>
+          \[E_x=-\frac{dV}{dx}=\frac{kQ\,x}{(x^2+a^2)^{3/2}}\]
+          <p>En el centro (\(x=0\)) el campo es cero, aunque \(V\) sea máximo.</p></li>
+        <li class="paso"><h3>Cerca del centro</h3>
+          <p>Si \(|x|\ll a\), el denominador es casi \(a^3\):</p>
+          \[E_x\approx\frac{kQ}{a^3}\,x\]
+          <p>El campo crece linealmente con \(x\), como un resorte.</p></li>
+        <li class="paso"><h3>Una carga de signo opuesto</h3>
+          <p>Si \(q\) tiene signo contrario a \(Q\), la fuerza apunta siempre hacia el centro:</p>
+          \[F=-\frac{k|Qq|}{a^3}\,x\]
+          <p>Es la ley de Hooke con constante \(k_{\text{ef}}=k|Qq|/a^3\).</p></li>
+        <li class="paso"><h3>Frecuencia de oscilación</h3>
+          \[\omega^2=\frac{k_{\text{ef}}}{m}=\frac{k|Qq|}{ma^3}\;\Rightarrow\;\boxed{\nu=\frac{1}{2\pi}\sqrt{\frac{k|Qq|}{ma^3}}}\]
+          <p>Si \(q\) y \(Q\) tienen el mismo signo, el centro es un punto de equilibrio <b>inestable</b> en el eje.</p></li>
+      </ol>
+      <div class="cajas final">
+        <p class="nota idea"><b>Lo que te llevas:</b> calcular \(V\) (escalar) y derivar suele ser más fácil
+          que integrar \(\vec E\) (vector) directamente.</p>
+        <div class="nota alerta"><b>Errores comunes</b><ul>
+          <li>Pensar que \(E=0\) implica \(V=0\).</li>
+          <li>Olvidar la condición de ángulo pequeño \(|x|\ll a\).</li></ul></div>
+      </div>
+    </article>
+
+    <!-- ============ ESFERA ============ -->
+    <article class="tarjeta demo c-u4" id="esfera" hidden>
+      <div class="demo-cab"><div><span class="chip-u">Energía de armado</span>
+        <h2>Energía para armar una esfera cargada</h2>
+        <p>¿Cuánto trabajo cuesta juntar una carga \(Q\) en una esfera uniforme de radio \(R\)? Lo hacemos de
+          dos formas y comprobamos que coinciden.</p></div></div>
+      <div class="formula-grande">\(\displaystyle U=\frac{3kQ^2}{5R}\)<small>Resultado</small></div>
+      <ol class="pasos">
+        <li class="paso"><h3>Armar la esfera capa por capa</h3>
+          <p>Imagina que ya armaste una esfera de radio \(r\). Su carga es \(q(r)=Q\,r^3/R^3\) y, desde
+            afuera, actúa como una carga puntual en el centro.</p></li>
+        <li class="paso"><h3>Traer una capa nueva</h3>
+          <p>Traemos desde el infinito una capa de espesor \(dr\), con carga
+            \(dq=\rho\,4\pi r^2dr=3Q\,r^2dr/R^3\). El trabajo es carga por potencial:</p>
+          \[dU=\frac{k\,q(r)}{r}\,dq=\frac{kQr^3}{R^3\,r}\cdot\frac{3Qr^2}{R^3}\,dr=\frac{3kQ^2}{R^6}\,r^4\,dr\]</li>
+        <li class="paso"><h3>Integrar de 0 a R</h3>
+          \[U=\frac{3kQ^2}{R^6}\int_0^R r^4\,dr=\frac{3kQ^2}{R^6}\cdot\frac{R^5}{5}=\boxed{\frac{3kQ^2}{5R}}\]</li>
+        <li class="paso"><h3>Comprobar con la energía del campo</h3>
+          <p>La energía también vive en el campo, con densidad \(u=\tfrac12\varepsilon_0E^2\). Dentro
+            \(E=kQr/R^3\) y fuera \(E=kQ/r^2\):</p>
+          \[U_{\text{dentro}}=\frac{kQ^2}{10R}\qquad U_{\text{fuera}}=\frac{kQ^2}{2R}\]
+          \[U_{\text{dentro}}+U_{\text{fuera}}=\frac{kQ^2}{R}\left(\frac{1}{10}+\frac{5}{10}\right)=\frac{3kQ^2}{5R}\;✓\]</li>
+        <li class="paso"><h3>Un dato curioso</h3>
+          <p>La fracción de energía que queda dentro de la esfera es
+            \(\dfrac{1/10}{6/10}=\dfrac16\). ¡El 83 % de la energía está en el espacio de afuera!
+            (Es la figura 5.2 de la teoría.)</p></li>
+      </ol>
+      <div class="cajas final">
+        <p class="nota idea"><b>Lo que te llevas:</b> la energía de un sistema de cargas se puede contar
+          como trabajo de armado o como energía guardada en el campo. Ambas dan lo mismo.</p>
+        <div class="nota alerta"><b>Errores comunes</b><ul>
+          <li>Usar la carga total \(Q\) en vez de \(q(r)\) al traer cada capa.</li>
+          <li>Olvidar la energía del campo exterior.</li></ul></div>
+      </div>
+    </article>
+
+    <!-- ============ CONDENSADOR ============ -->
+    <article class="tarjeta demo c-u5" id="capacitor" hidden>
+      <div class="demo-cab"><div><span class="chip-u">Trabajo incremental</span>
+        <h2>Energía almacenada en un condensador</h2>
+        <p>Cargar un condensador cuesta trabajo, porque cada carga nueva hay que empujarla contra las que ya
+          están. Ese trabajo queda guardado en el campo.</p></div></div>
+      <div class="formula-grande">\(\displaystyle U=\frac{Q^2}{2C}=\frac12C\,\Delta V^2=\frac12Q\,\Delta V\)<small>Resultado</small></div>
+      <ol class="pasos">
+        <li class="paso"><h3>Pasar carga de una placa a la otra</h3>
+          <p>Cuando el condensador tiene carga \(q\), el voltaje entre placas es \(v=q/C\). Pasar un poquito
+            \(dq\) más cuesta:</p>
+          \[dW=v\,dq=\frac{q}{C}\,dq\]</li>
+        <li class="paso"><h3>Sumar desde 0 hasta Q</h3>
+          \[U=\int_0^Q\frac{q}{C}\,dq=\frac{Q^2}{2C}\]
+          <p>Usando \(Q=C\Delta V\) salen las otras dos formas: \(\tfrac12C\Delta V^2\) y \(\tfrac12Q\Delta V\).</p></li>
+        <li class="paso"><h3>¿Por qué el ½?</h3>
+          <p>Al principio cuesta poco (el voltaje es cero) y al final cuesta \(\Delta V\) por unidad de carga.
+            En promedio se paga la mitad: \(U=Q\cdot\tfrac{\Delta V}{2}\).</p></li>
+        <li class="paso"><h3>Densidad de energía</h3>
+          <p>Para placas paralelas, \(C=\varepsilon_0A/d\) y \(\Delta V=Ed\):</p>
+          \[U=\frac12\frac{\varepsilon_0A}{d}(Ed)^2=\frac12\varepsilon_0E^2\,(Ad)\]
+          <p>Como \(Ad\) es el volumen entre placas: \(\boxed{u=\tfrac12\varepsilon_0E^2}\). Vale para cualquier campo.</p></li>
+        <li class="paso"><h3>Meter un dieléctrico</h3>
+          <p><b>Con la batería conectada</b> (\(\Delta V\) fijo): \(C\to KC\), así que \(Q\) y \(U\) suben \(K\) veces.</p>
+          <p><b>Con la batería desconectada</b> (\(Q\) fijo): \(U=Q^2/2C\) baja \(K\) veces; el dieléctrico es
+            atraído hacia dentro.</p></li>
+      </ol>
+      <div class="cajas final">
+        <p class="nota idea"><b>Pruébalo:</b> en la <a href="simuladores.html#condensador">calculadora de
+          condensadores</a> cambia K con la batería conectada y desconectada.</p>
+        <div class="nota alerta"><b>Errores comunes</b><ul>
+          <li>Escribir \(U=Q\Delta V\) (falta el ½).</li>
+          <li>No fijarse qué se mantiene constante: \(Q\) o \(\Delta V\).</li></ul></div>
+      </div>
+    </article>
+
+    <!-- ============ RC ============ -->
+    <article class="tarjeta demo c-u6" id="rc" hidden>
+      <div class="demo-cab"><div><span class="chip-u">Kirchhoff + ecuación diferencial</span>
+        <h2>Carga de un circuito RC</h2>
+        <p>Una fuente \(\varepsilon\), una resistencia \(R\) y un condensador \(C\) descargado. Cerramos el
+          interruptor en \(t=0\). ¿Cómo crece la carga y a dónde va la energía?</p></div></div>
+      <div class="formula-grande">\(\displaystyle q(t)=C\varepsilon\left(1-e^{-t/RC}\right)\)<small>Resultado</small></div>
+      <ol class="pasos">
+        <li class="paso"><h3>Recorrer la malla</h3>
+          <p>Por Kirchhoff, la fuente sube \(\varepsilon\), la resistencia baja \(iR\) y el condensador baja \(q/C\):</p>
+          \[\varepsilon-iR-\frac{q}{C}=0,\qquad i=\frac{dq}{dt}\]</li>
+        <li class="paso"><h3>Separar variables</h3>
+          \[R\frac{dq}{dt}=\frac{C\varepsilon-q}{C}\;\Rightarrow\;\frac{dq}{C\varepsilon-q}=\frac{dt}{RC}\]</li>
+        <li class="paso"><h3>Integrar con q(0) = 0</h3>
+          \[-\ln\!\left(\frac{C\varepsilon-q}{C\varepsilon}\right)=\frac{t}{RC}\;\Rightarrow\;\boxed{q(t)=C\varepsilon\left(1-e^{-t/RC}\right)}\]
+          <p>Derivando: \(i(t)=\dfrac{\varepsilon}{R}\,e^{-t/RC}\). La constante de tiempo es \(\tau=RC\): en un
+            \(\tau\) se alcanza el 63 % de la carga final.</p></li>
+        <li class="paso"><h3>Energía que entrega la fuente</h3>
+          \[W_{\text{fuente}}=\int_0^\infty\varepsilon\,i\,dt=\varepsilon\,Q_f=C\varepsilon^2\]</li>
+        <li class="paso"><h3>Energía que se pierde en R</h3>
+          \[W_R=\int_0^\infty i^2R\,dt=\frac{\varepsilon^2}{R}\int_0^\infty e^{-2t/RC}dt=\frac{\varepsilon^2}{R}\cdot\frac{RC}{2}=\frac12C\varepsilon^2\]
+          <p>Y en el condensador queda \(U_C=\tfrac12C\varepsilon^2\). <b>Mitad y mitad</b>, sin importar \(R\).</p></li>
+      </ol>
+      <div class="cajas final">
+        <p class="nota idea"><b>Pruébalo:</b> en el <a href="simuladores.html#rc">simulador RC</a> cambia \(R\) y mira
+          cómo cambia \(\tau\), pero no el reparto de energía.</p>
+        <div class="nota alerta"><b>Errores comunes</b><ul>
+          <li>Signos al recorrer la malla: revisa el criterio de la figura 6.1.</li>
+          <li>Pensar que una R pequeña ahorra energía: solo carga más rápido.</li></ul></div>
+      </div>
+    </article>
+
+    <div class="tarjeta" style="padding:14px 18px;margin-top:16px;position:sticky;bottom:12px;z-index:5">
+      <div class="controles">
+        <button type="button" class="btn pri" id="sig">Siguiente paso →</button>
+        <button type="button" class="btn sec" id="todo">Mostrar todo</button>
+        <button type="button" class="btn sec" id="reini">Reiniciar</button>
+        <div class="progreso" style="flex:1 1 220px"><span id="cuenta">Paso 1 de 5</span><div class="barra c-actual" id="barra"><i></i></div></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer id="pie"></footer>
+
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+  var demos=[].slice.call(document.querySelectorAll(".demo")),
+      botones=[].slice.call(document.querySelectorAll("#selector button")),
+      sig=document.getElementById("sig"), todo=document.getElementById("todo"),
+      reini=document.getElementById("reini"), cuenta=document.getElementById("cuenta"),
+      barra=document.getElementById("barra"), actual=null, visto=1;
+
+  demos.forEach(function(d){
+    [].forEach.call(d.querySelectorAll(".paso"),function(p,i){ p.setAttribute("data-n",i+1); });
+  });
+
+  function pasos(){ return [].slice.call(actual.querySelectorAll(".paso")); }
+
+  function pinta(animar){
+    var ps=pasos(), n=ps.length;
+    ps.forEach(function(p,i){
+      var ver=i<visto;
+      if(ver&&p.hidden&&animar){ p.classList.add("nuevo"); }
+      p.hidden=!ver;
+    });
+    actual.querySelector(".final").hidden=visto<n;
+    cuenta.textContent="Paso "+visto+" de "+n;
+    barra.firstElementChild.style.width=(100*visto/n)+"%";
+    barra.style.setProperty("--u",getComputedStyle(actual).getPropertyValue("--u"));
+    sig.disabled=visto>=n; sig.style.opacity=visto>=n?.5:1;
+    sig.textContent=visto>=n?"¡Terminado!":"Siguiente paso →";
+  }
+
+  function elegir(id,desplazar){
+    var d=document.getElementById(id); if(!d||!d.classList.contains("demo")) d=demos[0];
+    actual=d; visto=1;
+    demos.forEach(function(x){ x.hidden=x!==d; });
+    botones.forEach(function(b){ b.setAttribute("aria-pressed",String(b.dataset.d===d.id)); });
+    if(location.hash!=="#"+d.id) history.replaceState(null,"","#"+d.id);
+    pinta(false);
+    if(desplazar) d.scrollIntoView({behavior:"smooth",block:"start"});
+  }
+
+  botones.forEach(function(b){ b.addEventListener("click",function(){ elegir(b.dataset.d,true); }); });
+  sig.addEventListener("click",function(){
+    if(visto<pasos().length){ visto++; pinta(true);
+      var p=pasos()[visto-1]; p.scrollIntoView({behavior:"smooth",block:"nearest"}); }
+  });
+  todo.addEventListener("click",function(){ visto=pasos().length; pinta(true); });
+  reini.addEventListener("click",function(){ visto=1; pinta(false); actual.scrollIntoView({behavior:"smooth"}); });
+  window.addEventListener("hashchange",function(){ elegir(location.hash.slice(1),false); });
+
+  elegir(location.hash.slice(1),false);
+});
+</script>
+</body>
+</html>

@@ -3,835 +3,186 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Guia de estudio de electromagnetismo: formulario, figuras, laboratorios y problemas resueltos.">
 <title>Campo y Corriente</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
-
+<meta name="description" content="Guía de estudio de electromagnetismo: teoría, demostraciones paso a paso, simuladores, problemas resueltos, quiz y formulario.">
+<script>try{var t=localStorage.getItem("cc-tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/estilo.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/comun.js"></script>
 <style>
-/* Layout: láminas numeradas sobre fondo de puntos, con índice fijo a la izquierda.
-   Grafito cálido + verde azulado; el bronce marca únicamente resultados. */
-:root{
-  --papel:#f4f4f1;
-  --lamina:#fbfbf9;
-  --tinta:#1b201d;
-  --tinta-sv:#5f6763;
-  --regla:#dcdcd6;
-  --punto:#dedfd8;
-  --verde:#13624a;
-  --verde-sv:#e4efe9;
-  --bronce:#8a5a1e;
-  --bronce-sv:#f6efe3;
-
-  --f-tit:"Archivo","Helvetica Neue",Arial,sans-serif;
-  --f-txt:"Source Serif 4",Georgia,"Times New Roman",serif;
-  --f-eq:"STIX Two Text","Cambria Math","DejaVu Serif",Georgia,serif;
-
-  color-scheme:light;
-  padding-top:env(safe-area-inset-top,0px);
-  padding-bottom:env(safe-area-inset-bottom,0px);
-}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --papel:#121512; --lamina:#1a1e1b; --tinta:#e3e7e2; --tinta-sv:#949d96;
-    --regla:#2b322d; --punto:#1f251f; --verde:#64c79b; --verde-sv:#16281f;
-    --bronce:#d6a35f; --bronce-sv:#241c10;
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --papel:#121512; --lamina:#1a1e1b; --tinta:#e3e7e2; --tinta-sv:#949d96;
-  --regla:#2b322d; --punto:#1f251f; --verde:#64c79b; --verde-sv:#16281f;
-  --bronce:#d6a35f; --bronce-sv:#241c10;
-  color-scheme:dark;
-}
-
-*{box-sizing:border-box}
-body{
-  margin:0;
-  background:var(--papel);
-  background-image:radial-gradient(var(--punto) 1px,transparent 1px);
-  background-size:22px 22px;
-  color:var(--tinta);
-  font-family:var(--f-txt);
-  font-size:16.5px;
-  line-height:1.62;
-  -webkit-text-size-adjust:100%;
-}
-h1,h2,h3{font-family:var(--f-tit);text-wrap:balance;margin:0;line-height:1.14}
-p{margin:0}
-img{display:block;max-width:100%;height:auto}
-a{color:var(--verde)}
-:focus-visible{outline:2px solid var(--verde);outline-offset:2px;border-radius:2px}
-
-/* ---- ecuaciones ---- */
-.eq{font-family:var(--f-eq);font-feature-settings:"liga" 0;white-space:normal}
-.eq b{font-weight:700}
-.eq sub,.eq sup{font-size:.68em;line-height:0}
-.eq .sep{color:var(--tinta-sv);font-family:var(--f-txt);font-size:.85em;padding:0 .45em}
-.fr{display:inline-flex;flex-direction:column;vertical-align:middle;
-  text-align:center;margin:0 .22em;font-size:.94em}
-.fr .n{padding:0 .4em;line-height:1.12}
-.fr .d{padding:.06em .4em 0;border-top:1px solid currentColor;line-height:1.2}
-
-.env{max-width:1150px;margin:0 auto;
-  padding-left:max(16px,env(safe-area-inset-left,0px));
-  padding-right:max(16px,env(safe-area-inset-right,0px));}
-
-/* ---- cabecera ---- */
-.cab{background:var(--lamina);border-bottom:1px solid var(--regla)}
-.cab-in{padding-block:34px 28px}
-.cab-txt{max-width:70ch}
-.sello{display:inline-block;font-family:var(--f-tit);font-size:11px;font-weight:600;
-  letter-spacing:.15em;text-transform:uppercase;color:var(--verde);
-  background:var(--verde-sv);border-radius:2px;padding:5px 10px}
-.cab h1{font-size:clamp(2.3rem,7vw,3.6rem);font-weight:700;letter-spacing:-.025em;
-  margin-top:16px}
-.lead{font-size:1.06rem;color:var(--tinta-sv);margin-top:10px}
-.meta{display:flex;flex-wrap:wrap;gap:7px 24px;margin-top:18px;
-  font-family:var(--f-tit);font-size:12.5px;color:var(--tinta-sv);
-  font-variant-numeric:tabular-nums}
-.meta b{color:var(--tinta);font-weight:600}
-
-/* ---- rail + cuerpo ---- */
-.cuerpo{display:grid;grid-template-columns:186px minmax(0,1fr);gap:44px;
-  padding-block:38px 68px;align-items:start}
-.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 18px);
-  font-family:var(--f-tit);font-size:13px}
-.rail .rot{font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--tinta-sv);padding-bottom:8px;border-bottom:1px solid var(--regla);
-  margin:0 0 9px}
-.rail .rot + ol{margin-bottom:22px}
-.rail ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1px}
-.rail a{display:flex;gap:10px;padding:6px 9px;border-radius:3px;text-decoration:none;
-  color:var(--tinta-sv);border-left:2px solid transparent}
-.rail a:hover{background:var(--verde-sv);color:var(--tinta)}
-.rail a.on{border-left-color:var(--verde);color:var(--tinta);background:var(--verde-sv)}
-.rail a i{font-style:normal;color:var(--verde);font-weight:600;min-width:1.1em}
-
-/* ---- láminas ---- */
-.lam,.bloque{background:var(--lamina);border:1px solid var(--regla);border-radius:4px;
-  margin-bottom:26px;scroll-margin-top:22px}
-.lam-cab,.bloque-cab{padding:19px 22px 15px;border-bottom:1px solid var(--regla)}
-.lam-cab{display:flex;gap:16px;align-items:baseline}
-.num{font-family:var(--f-tit);font-size:13px;font-weight:700;letter-spacing:.06em;
-  color:var(--verde);background:var(--verde-sv);border-radius:2px;padding:4px 7px}
-.lam-cab h2,.bloque-cab h2{font-size:1.46rem;font-weight:600;letter-spacing:-.015em}
-.lam-cab p,.bloque-cab p{margin-top:5px;font-size:.94rem;color:var(--tinta-sv)}
-.lam-cuerpo,.bloque-cuerpo{padding:20px 22px 24px;display:grid;gap:22px}
-.bloque-cuerpo{display:block}
-
-.clave{background:var(--verde-sv);border-radius:3px;padding:16px 18px;
-  display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;justify-content:space-between}
-.clave .eq{font-size:1.32rem;color:var(--tinta);min-width:0}
-.eq-rot{font-family:var(--f-tit);font-size:10.5px;font-weight:600;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--verde)}
-
-.rot-sec{font-family:var(--f-tit);font-size:10.5px;font-weight:600;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--tinta-sv);margin:0 0 9px}
-.temas{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0 0 4px;padding:0}
-.temas li{font-family:var(--f-tit);font-size:12px;border:1px solid var(--regla);
-  border-radius:2px;padding:3px 9px;color:var(--tinta-sv)}
-
-figure{margin:0}
-figure img{border:1px solid var(--regla);border-radius:3px;background:#fff}
-figcaption{font-family:var(--f-tit);font-size:11.5px;color:var(--tinta-sv);
-  margin-top:7px;line-height:1.5}
-.figs{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(265px,1fr))}
-
-.nota{background:var(--bronce-sv);border-left:2px solid var(--bronce);
-  padding:12px 16px;font-size:.93rem;border-radius:0 3px 3px 0}
-
-.res{border-top:1px solid var(--regla);padding-top:17px}
-.tabla-env{overflow-x:auto}
-.res table{width:100%;border-collapse:collapse;font-size:.9rem}
-.res th{font-family:var(--f-tit);font-size:10.5px;font-weight:600;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--tinta-sv);text-align:left;
-  padding:0 12px 8px 0;border-bottom:1px solid var(--regla);white-space:nowrap}
-.res td{padding:10px 12px 10px 0;border-bottom:1px solid var(--regla);vertical-align:top}
-.res tr:last-child td{border-bottom:none}
-.res td:first-child{font-family:var(--f-tit);font-size:12px;font-weight:600;
-  color:var(--verde);white-space:nowrap}
-.res td:last-child{color:var(--bronce);font-size:1rem}
-
-/* ---- laboratorios ---- */
-.labs{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(275px,1fr))}
-.lab{border:1px solid var(--regla);border-radius:3px;padding:18px;display:flex;
-  flex-direction:column;gap:11px;min-width:0}
-.lab-n{font-family:var(--f-tit);font-size:12px;font-weight:700;letter-spacing:.08em;
-  color:var(--bronce);background:var(--bronce-sv);border-radius:2px;padding:3px 8px;
-  align-self:flex-start}
-.lab h3{font-size:1.12rem;font-weight:600}
-.lab-sub{font-family:var(--f-tit);font-size:11.5px;color:var(--tinta-sv);
-  letter-spacing:.02em;margin-top:-6px}
-.lab p{font-size:.93rem}
-.lab .rot-sec{margin-top:3px}
-.lab-lista{margin:0;padding-left:1.1em;font-size:.91rem;color:var(--tinta-sv);
-  display:grid;gap:5px}
-.lab-liga{margin-top:auto;padding-top:8px;font-family:var(--f-tit);font-size:11.5px;
-  color:var(--tinta-sv);border-top:1px solid var(--regla)}
-
-/* ---- formulario ---- */
-.buscador{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
-#q{flex:1 1 230px;min-width:0;font-family:var(--f-tit);font-size:14.5px;padding:10px 13px;
-  border:1px solid var(--regla);border-radius:3px;background:var(--papel);color:var(--tinta)}
-#q::placeholder{color:var(--tinta-sv)}
-.cuenta{font-family:var(--f-tit);font-size:12.5px;color:var(--tinta-sv);
-  font-variant-numeric:tabular-nums}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
-.chip{font-family:var(--f-tit);font-size:12px;font-weight:500;padding:5px 11px;
-  border-radius:2px;border:1px solid var(--regla);background:transparent;
-  color:var(--tinta-sv);cursor:pointer}
-.chip:hover{color:var(--tinta);border-color:var(--tinta-sv)}
-.chip[aria-pressed="true"]{background:var(--verde);border-color:var(--verde);color:var(--lamina)}
-#lista{list-style:none;margin:14px 0 0;padding:0;display:grid}
-#lista li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:baseline;
-  padding:11px 0;border-top:1px solid var(--regla)}
-.fx{min-width:0}
-.fx .eq{font-size:1.06rem;display:block;overflow-wrap:break-word}
-.fx em{font-style:normal;color:var(--tinta-sv);font-size:.87rem;display:block;margin-top:3px}
-.tag{font-family:var(--f-tit);font-size:10.5px;font-weight:600;letter-spacing:.1em;
-  color:var(--tinta-sv);white-space:nowrap}
-.vacio{font-family:var(--f-tit);font-size:13.5px;color:var(--tinta-sv);padding:20px 0}
-
-/* ---- referencias ---- */
-.refs{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(245px,1fr))}
-.refs h3{font-size:.98rem;font-weight:600;margin-bottom:10px}
-.refs ul{list-style:none;margin:0;padding:0;display:grid;gap:9px;font-size:.92rem}
-.refs li{color:var(--tinta-sv);line-height:1.5}
-.refs li b{color:var(--tinta);font-weight:600}
-.refs a{text-decoration:none;border-bottom:1px solid var(--regla)}
-.refs a:hover{border-bottom-color:var(--verde)}
-.const li .eq{color:var(--tinta);font-size:.98rem}
-.const small{display:block;font-family:var(--f-tit);font-size:11px}
-
-.pie{background:var(--lamina);border-top:1px solid var(--regla)}
-.pie-in{padding-block:22px 30px;font-family:var(--f-tit);font-size:12px;
-  color:var(--tinta-sv);display:flex;flex-wrap:wrap;gap:8px 28px;justify-content:space-between}
-
-@media (max-width:880px){
-  .cuerpo{grid-template-columns:1fr;gap:20px}
-  .rail{position:static}
-  .rail .rot + ol{margin-bottom:14px}
-  .rail ol{flex-direction:row;flex-wrap:wrap;gap:5px}
-  .rail a{border-left:none;border:1px solid var(--regla);border-radius:2px;padding:5px 10px}
-  .rail a.on{border-color:var(--verde)}
-  #lista li{grid-template-columns:1fr;gap:4px}
-  .clave{flex-direction:column;align-items:flex-start}
-}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.mini{padding:16px;display:flex;flex-direction:column;gap:10px}
+.mini canvas{width:100%;aspect-ratio:4/3;border-radius:12px;background:var(--bg2);touch-action:none;cursor:crosshair}
+.mini-pie{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 10px;font-size:.84rem;color:var(--ink2)}
+.cifras{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:28px;max-width:560px}
+.cifras div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.cifras b{display:block;font-family:var(--f-tit);font-size:1.6rem;line-height:1.1}
+.cifras span{font-size:.8rem;color:var(--ink2)}
+@media (max-width:520px){.cifras{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ruta{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));margin:0;padding:0}
+.ruta li{list-style:none;padding:18px}
+.ruta .n{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-tit);
+  font-weight:800;margin-bottom:10px;background:var(--u-sv);color:var(--u)}
+.ruta h3{font-size:1.02rem}
+.ruta p{font-size:.88rem;color:var(--ink2);margin-top:4px}
 </style>
 </head>
 <body>
-<header class="cab">
-  <div class="env cab-in">
-    <div class="cab-txt">
-      <div class="sello">Electrostática · Circuitos DC</div>
-      <h1>Campo y Corriente</h1>
-      <p class="lead">Guía de estudio de electromagnetismo: las ecuaciones que de verdad
-        se usan, figuras hechas a medida, tres laboratorios y los resultados de una
-        colección de problemas resueltos.</p>
-      <div class="meta">
-        <span><b>6</b> unidades</span>
-        <span><b>3</b> laboratorios</span>
-        <span><b>51</b> fórmulas</span>
-        <span><b>18</b> problemas con resultado</span>
+<a class="salta" href="#contenido">Saltar al contenido</a>
+<header id="cabecera"></header>
+
+<main id="contenido">
+  <section class="heroe">
+    <div class="env heroe-grid">
+      <div class="aparece">
+        <span class="ceja">Electrostática · Circuitos DC</span>
+        <h1>Aprende electromagnetismo <span>jugando con los campos</span></h1>
+        <p class="lead">Teoría clara, demostraciones paso a paso, simuladores que puedes tocar,
+          problemas resueltos y un quiz para ponerte a prueba. Todo en un solo lugar.</p>
+        <div class="acciones">
+          <a class="btn pri" href="teoria.html">Empezar por la teoría →</a>
+          <a class="btn sec" href="simuladores.html">Abrir simuladores</a>
+        </div>
+        <div class="cifras">
+          <div><b>6</b><span>unidades</span></div>
+          <div><b>6</b><span>demostraciones</span></div>
+          <div><b>4</b><span>simuladores</span></div>
+          <div><b>51</b><span>fórmulas</span></div>
+        </div>
+      </div>
+      <div class="tarjeta mini aparece">
+        <canvas id="mini" role="img" aria-label="Campo eléctrico de un dipolo; la carga negativa sigue al puntero"></canvas>
+        <div class="mini-pie"><span><b style="color:var(--coral)">●</b> +q fija · <b style="color:var(--pri)">●</b> −q sigue tu dedo o ratón</span>
+          <a href="simuladores.html#campo">Versión completa →</a></div>
       </div>
     </div>
-  </div>
-</header>
+  </section>
 
-<div class="env cuerpo">
+  <section class="seccion">
+    <div class="env">
+      <div class="sec-cab">
+        <h2>Las seis unidades</h2>
+        <p>De la carga eléctrica a los circuitos RC. Cada unidad tiene su fórmula clave, figuras y problemas.</p>
+      </div>
+      <div class="rejilla">
+        <a class="tarjeta t-link c-u1" href="teoria.html#u1"><span class="ico">1</span><h3>Carga y materia</h3>
+          <p>Cuantización, conservación y la ley de Coulomb.</p><span class="mas">Ver unidad →</span></a>
+        <a class="tarjeta t-link c-u2" href="teoria.html#u2"><span class="ico">2</span><h3>Campo eléctrico</h3>
+          <p>Superposición, líneas de fuerza y el dipolo.</p><span class="mas">Ver unidad →</span></a>
+        <a class="tarjeta t-link c-u3" href="teoria.html#u3"><span class="ico">3</span><h3>Ley de Gauss</h3>
+          <p>Flujo, simetrías y conductores en equilibrio.</p><span class="mas">Ver unidad →</span></a>
+        <a class="tarjeta t-link c-u4" href="teoria.html#u4"><span class="ico">4</span><h3>Potencial y energía</h3>
+          <p>Equipotenciales, gradiente y energía de armado.</p><span class="mas">Ver unidad →</span></a>
+        <a class="tarjeta t-link c-u5" href="teoria.html#u5"><span class="ico">5</span><h3>Condensadores</h3>
+          <p>Capacidad, dieléctricos y energía almacenada.</p><span class="mas">Ver unidad →</span></a>
+        <a class="tarjeta t-link c-u6" href="teoria.html#u6"><span class="ico">6</span><h3>Corriente y circuitos</h3>
+          <p>Ohm, Kirchhoff y la carga de un circuito RC.</p><span class="mas">Ver unidad →</span></a>
+      </div>
+    </div>
+  </section>
 
-  <nav class="rail" aria-label="Secciones">
-    <div class="rot">Unidades</div>
-    <ol>
-      <li><a href="#u1"><i>1</i> Carga y materia</a></li>
-      <li><a href="#u2"><i>2</i> Campo eléctrico</a></li>
-      <li><a href="#u3"><i>3</i> Ley de Gauss</a></li>
-      <li><a href="#u4"><i>4</i> Potencial</a></li>
-      <li><a href="#u5"><i>5</i> Condensadores</a></li>
-      <li><a href="#u6"><i>6</i> Circuitos</a></li>
-    </ol>
-    <div class="rot">Práctica</div>
-    <ol>
-      <li><a href="#labs"><i>L</i> Laboratorios</a></li>
-      <li><a href="#formulario"><i>∑</i> Formulario</a></li>
-      <li><a href="#referencias"><i>§</i> Referencias</a></li>
-    </ol>
-  </nav>
+  <section class="seccion">
+    <div class="env">
+      <div class="sec-cab">
+        <h2>Herramientas para estudiar</h2>
+        <p>Elige cómo quieres practicar hoy.</p>
+      </div>
+      <div class="rejilla">
+        <a class="tarjeta t-link c-u3" href="demostraciones.html">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/></svg></span>
+          <h3>Demostraciones</h3><p>Seis derivaciones clave, un paso a la vez, con la idea física detrás de cada línea.</p>
+          <span class="mas">Ver demostraciones →</span></a>
+        <a class="tarjeta t-link c-u2" href="simuladores.html">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="7" cy="12" r="3"/><circle cx="17" cy="12" r="3"/><path d="M10 12h4M7 6v3M17 15v3"/></svg></span>
+          <h3>Simuladores</h3><p>Mueve cargas, cambia la gaussiana, arma un condensador y carga un circuito RC.</p>
+          <span class="mas">Abrir simuladores →</span></a>
+        <a class="tarjeta t-link c-u4" href="problemas.html">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l2 2 4-4"/><rect x="4" y="4" width="16" height="16" rx="3"/></svg></span>
+          <h3>Problemas y quiz</h3><p>18 problemas con su solución desplegable y un quiz de conceptos con explicación.</p>
+          <span class="mas">Practicar →</span></a>
+        <a class="tarjeta t-link c-u5" href="formulario.html">
+          <span class="ico">Σ</span>
+          <h3>Formulario</h3><p>51 fórmulas con buscador y filtro por unidad. Ideal para el repaso final.</p>
+          <span class="mas">Buscar fórmulas →</span></a>
+        <a class="tarjeta t-link c-u1" href="laboratorios.html">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6L5 19a1.5 1.5 0 0 0 1.3 2h11.4a1.5 1.5 0 0 0 1.3-2L14 9V3"/></svg></span>
+          <h3>Laboratorios</h3><p>Equipotenciales, osciloscopio y curvas V–I: qué se mide y qué se concluye.</p>
+          <span class="mas">Ver laboratorios →</span></a>
+      </div>
+    </div>
+  </section>
 
-  <main>
+  <section class="seccion">
+    <div class="env">
+      <div class="sec-cab"><h2>Una ruta de estudio sugerida</h2>
+        <p>Si no sabes por dónde empezar, sigue este orden en cada unidad.</p></div>
+      <ol class="ruta">
+        <li class="tarjeta c-u2"><span class="n">1</span><h3>Lee la teoría</h3><p>Quédate con la fórmula clave y la figura.</p></li>
+        <li class="tarjeta c-u3"><span class="n">2</span><h3>Sigue la demostración</h3><p>Entiende de dónde sale el resultado.</p></li>
+        <li class="tarjeta c-u4"><span class="n">3</span><h3>Juega con el simulador</h3><p>Predice qué pasará antes de mover el control.</p></li>
+        <li class="tarjeta c-u5"><span class="n">4</span><h3>Resuelve problemas</h3><p>Intenta solo y despliega la solución al final.</p></li>
+        <li class="tarjeta c-u1"><span class="n">5</span><h3>Hazte el quiz</h3><p>Si fallas una, vuelve a la teoría de esa unidad.</p></li>
+      </ol>
+    </div>
+  </section>
+</main>
 
-    <!-- ============ U1 ============ -->
-    <section class="lam" id="u1">
-      <div class="lam-cab">
-        <span class="num">01</span>
-        <div><h2>Carga y materia</h2>
-          <p>Qué es la carga, por qué viene en paquetes y cómo se atraen dos de ellas.</p></div>
-      </div>
-      <div class="lam-cuerpo">
-        <div class="clave">
-          <span class="eq">F = <span class="fr"><span class="n">1</span><span class="d">4πε<sub>0</sub></span></span>
-          <span class="fr"><span class="n">q<sub>1</sub>q<sub>2</sub></span><span class="d">r<sup>2</sup></span></span></span>
-          <span class="eq-rot">Ley de Coulomb</span>
-        </div>
-        <div>
-          <div class="rot-sec">Temas</div>
-          <ul class="temas">
-            <li>Polarización</li><li>Cuantización Q = Ne</li><li>Conservación</li>
-            <li>Formas de electrizar</li><li>Gota de Millikan</li>
-            <li>Distribuciones ρ, σ, λ</li>
-          </ul>
-        </div>
-        <div class="figs">
-          <figure>
-            <img src="fig/c1_coulomb.png" alt="Fuerza de Coulomb entre dos cargas puntuales" loading="lazy">
-            <figcaption>1.1 — Fuerza entre dos cargas: misma recta, sentidos opuestos.</figcaption>
-          </figure>
-          <figure>
-            <img src="fig/c1_millikan.png" alt="Experimento de la gota de aceite de Millikan" loading="lazy">
-            <figcaption>1.2 — Gota de Millikan: equilibrio entre peso y fuerza eléctrica.</figcaption>
-          </figure>
-        </div>
-        <p class="nota">El salto de carga es tan pequeño (1,602&times;10<sup>&minus;19</sup> C) que
-          en problemas macroscópicos se trata la carga como variable continua. Un coulomb
-          son unas 6,24&times;10<sup>18</sup> cargas elementales.</p>
-        <div class="res">
-          <div class="rot-sec">Problemas resueltos</div>
-          <div class="tabla-env"><table>
-            <thead><tr><th>Ref.</th><th>Qué pide</th><th>Resultado</th></tr></thead>
-            <tbody>
-            <tr><td>SP21</td><td>Fuerza de un hilo de largo 2L sobre una carga a distancia D</td>
-                <td class="eq">F<sub>x</sub> = 2kqλ / (D<sup>2</sup>+L<sup>2</sup>)<sup>1/2</sup></td></tr>
-            <tr><td>S1P46</td><td>Separación de dos esferas de cobre colgadas, ángulo pequeño</td>
-                <td class="eq">x = (lq<sup>2</sup> / 2πε<sub>0</sub>mg)<sup>1/3</sup></td></tr>
-            </tbody>
-          </table></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ U2 ============ -->
-    <section class="lam" id="u2">
-      <div class="lam-cab">
-        <span class="num">02</span>
-        <div><h2>Campo eléctrico</h2>
-          <p>Del «actúa a distancia» al campo: la carga modifica el espacio que la rodea.</p></div>
-      </div>
-      <div class="lam-cuerpo">
-        <div class="clave">
-          <span class="eq"><b>E</b> = <span class="fr"><span class="n"><b>F</b></span><span class="d">q<sub>0</sub></span></span>
-            <span class="sep">y</span> E = <span class="fr"><span class="n">kq</span><span class="d">r<sup>2</sup></span></span></span>
-          <span class="eq-rot">Definición y carga puntual</span>
-        </div>
-        <div>
-          <div class="rot-sec">Temas</div>
-          <ul class="temas">
-            <li>Superposición</li><li>Líneas de fuerza</li><li>Dipolo eléctrico</li>
-            <li>Distribuciones continuas</li><li>Flujo eléctrico</li>
-          </ul>
-        </div>
-        <div class="figs">
-          <figure>
-            <img src="fig/c2_lineas.png" alt="Líneas de campo: carga positiva, negativa, dipolo y dos cargas iguales" loading="lazy">
-            <figcaption>2.1 — Cuatro configuraciones básicas de líneas de fuerza.</figcaption>
-          </figure>
-          <figure>
-            <img src="fig/c2_dipolo.png" alt="Dipolo eléctrico y su momento dipolar" loading="lazy">
-            <figcaption>2.2 — Dipolo: dos cargas iguales y opuestas separadas una distancia d.</figcaption>
-          </figure>
-        </div>
-        <p class="nota">Las líneas de fuerza no son trayectorias de partículas. Son una forma
-          de dibujar la dirección del campo: donde se juntan, E es mayor, y nunca se cruzan,
-          porque en un punto el campo tiene una sola dirección.</p>
-      </div>
-    </section>
-
-    <!-- ============ U3 ============ -->
-    <section class="lam" id="u3">
-      <div class="lam-cab">
-        <span class="num">03</span>
-        <div><h2>Ley de Gauss</h2>
-          <p>Cuando hay simetría, el flujo resuelve en dos líneas lo que la integral no.</p></div>
-      </div>
-      <div class="lam-cuerpo">
-        <div class="clave">
-          <span class="eq">∮<sub>S</sub> <b>E</b>&nbsp;·&nbsp;d<b>A</b> =
-            <span class="fr"><span class="n">q<sub>enc</sub></span><span class="d">ε<sub>0</sub></span></span></span>
-          <span class="eq-rot">Solo cuenta la carga encerrada</span>
-        </div>
-        <div>
-          <div class="rot-sec">Temas</div>
-          <ul class="temas">
-            <li>Simetría esférica</li><li>Cilíndrica</li><li>Plana</li>
-            <li>Gauss ⇒ Coulomb</li><li>Conductores</li><li>Aislantes</li>
-          </ul>
-        </div>
-        <div class="figs">
-          <figure>
-            <img src="fig/c3_simetrias.png" alt="Simetría esférica, cilíndrica y plana con su superficie gaussiana" loading="lazy">
-            <figcaption>3.1 — Las tres simetrías básicas y la gaussiana que le toca a cada una.</figcaption>
-          </figure>
-          <figure>
-            <img src="fig/c3_hidrogeno.png" alt="Densidad, carga encerrada y campo del átomo de hidrógeno" loading="lazy">
-            <figcaption>3.2 — Densidad, carga encerrada y campo del átomo de hidrógeno.</figcaption>
-          </figure>
-        </div>
-        <div class="res">
-          <div class="rot-sec">Problemas resueltos</div>
-          <div class="tabla-env"><table>
-            <thead><tr><th>Ref.</th><th>Qué pide</th><th>Resultado</th></tr></thead>
-            <tbody>
-            <tr><td>S1P13</td><td>Densidad λ del hilo a partir de la velocidad final</td>
-                <td class="eq">λ = πε<sub>0</sub>mv<sub>0</sub><sup>2</sup> / (q·ln 2)</td></tr>
-            <tr><td>S1P6 a</td><td>Constante ρ<sub>0</sub> de la nube electrónica</td>
-                <td class="eq">ρ<sub>0</sub> = &minus;e / (πa<sub>0</sub><sup>3</sup>)</td></tr>
-            <tr><td>S1P6 b</td><td>Carga dentro del radio de Bohr</td>
-                <td class="eq">q(a<sub>0</sub>) = &minus;e(1&minus;5e<sup>&minus;2</sup>) ≈ &minus;0,323 e</td></tr>
-            <tr><td>S1P6 c</td><td>Campo E(r) del átomo</td>
-                <td class="eq">E = &minus;e / (4πε<sub>0</sub>r<sup>2</sup>) · [1 &minus; e<sup>&minus;2r/a<sub>0</sub></sup>(1 + 2r/a<sub>0</sub> + 2r<sup>2</sup>/a<sub>0</sub><sup>2</sup>)]</td></tr>
-            </tbody>
-          </table></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ U4 ============ -->
-    <section class="lam" id="u4">
-      <div class="lam-cab">
-        <span class="num">04</span>
-        <div><h2>Potencial y energía</h2>
-          <p>Un campo escalar que se suma como número y del que sale <b>E</b> derivando.</p></div>
-      </div>
-      <div class="lam-cuerpo">
-        <div class="clave">
-          <span class="eq">ΔV = &minus;∫ <b>E</b>&nbsp;·&nbsp;d<b>r</b>
-            <span class="sep">y</span> <b>E</b> = &minus;∇V</span>
-          <span class="eq-rot">Las dos direcciones entre V y E</span>
-        </div>
-        <div>
-          <div class="rot-sec">Temas</div>
-          <ul class="temas">
-            <li>Superficies equipotenciales</li><li>Energía potencial</li>
-            <li>Dipolo lejano</li><li>Continuidad de V</li><li>Torque sobre un dipolo</li>
-          </ul>
-        </div>
-        <div class="figs">
-          <figure>
-            <img src="fig/c4_equipotenciales.png" alt="Equipotenciales y líneas de campo en carga puntual, dipolo y campo uniforme" loading="lazy">
-            <figcaption>4.1 — Equipotenciales y líneas de campo: siempre se cortan a 90°.</figcaption>
-          </figure>
-          <figure>
-            <img src="fig/c4_anillo.png" alt="Potencial en el eje de un anillo cargado" loading="lazy">
-            <figcaption>4.2 — Potencial del anillo en su eje; cerca del centro es una parábola.</figcaption>
-          </figure>
-        </div>
-        <p class="nota">¿Por qué <b>E</b> es perpendicular a la equipotencial? Al moverse un
-          d<b>r</b> sobre ella, V no cambia: dV = &minus;<b>E</b>·d<b>r</b> = 0. Como
-          d<b>r</b> ≠ 0, entonces <b>E</b> ⊥ d<b>r</b>.</p>
-        <div class="res">
-          <div class="rot-sec">Problemas resueltos</div>
-          <div class="tabla-env"><table>
-            <thead><tr><th>Ref.</th><th>Qué pide</th><th>Resultado</th></tr></thead>
-            <tbody>
-            <tr><td>S2P1</td><td>V dentro de una esfera con ρ(r) = (ρ<sub>0</sub>/R)r</td>
-                <td class="eq">V<sub>I</sub> = ρ<sub>0</sub>R<sup>2</sup>/4ε<sub>0</sub> &minus; (ρ<sub>0</sub>/4Rε<sub>0</sub>)·(r<sup>3</sup>&minus;R<sup>3</sup>)/3</td></tr>
-            <tr><td>S2P17</td><td>Energía de armado de una esfera uniforme</td>
-                <td class="eq">U = 3kQ<sup>2</sup> / (5R<sub>0</sub>)</td></tr>
-            <tr><td>S2P38</td><td>V en el eje de un anillo</td>
-                <td class="eq">V(x) = kQ / √(x<sup>2</sup>+a<sup>2</sup>)</td></tr>
-            <tr><td>S2P39</td><td>Frecuencia de oscilación en el centro del anillo</td>
-                <td class="eq">ν = (1/2π)·√(kQq / ma<sup>3</sup>)</td></tr>
-            <tr><td>S2P21</td><td>Energía para armar cuatro cargas en un rectángulo</td>
-                <td class="eq">E<sub>p,el</sub> ≈ &minus;3,96 J</td></tr>
-            <tr><td>S2P35</td><td>Forma de las equipotenciales del dipolo lejano</td>
-                <td class="eq">r<sup>2</sup> = b·cos θ,&nbsp; b = kp/V</td></tr>
-            </tbody>
-          </table></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ U5 ============ -->
-    <section class="lam" id="u5">
-      <div class="lam-cab">
-        <span class="num">05</span>
-        <div><h2>Condensadores y dieléctricos</h2>
-          <p>Guardar carga y energía, y qué cambia cuando el hueco deja de estar vacío.</p></div>
-      </div>
-      <div class="lam-cuerpo">
-        <div class="clave">
-          <span class="eq">C = <span class="fr"><span class="n">Q</span><span class="d">ΔV</span></span>
-            <span class="sep">y</span> C<sub>K</sub> = K·C<sub>0</sub></span>
-          <span class="eq-rot">Capacidad y efecto del dieléctrico</span>
-        </div>
-        <div>
-          <div class="rot-sec">Temas</div>
-          <ul class="temas">
-            <li>Plano, cilíndrico, esférico</li><li>Serie y paralelo</li>
-            <li>Energía y densidad u</li><li>Constante K</li>
-            <li>Vectores D, E, P</li><li>Gauss con dieléctricos</li>
-          </ul>
-        </div>
-        <div class="figs">
-          <figure>
-            <img src="fig/c5_geometrias.png" alt="Condensador plano, cilíndrico y esférico con sus capacidades" loading="lazy">
-            <figcaption>5.1 — Las tres geometrías clásicas y su capacidad en el vacío.</figcaption>
-          </figure>
-          <figure>
-            <img src="fig/c5_s3p36.png" alt="Campo, densidad de energía y reparto dentro y fuera de una esfera" loading="lazy">
-            <figcaption>5.2 — Solo 1/6 de la energía queda dentro de la esfera cargada.</figcaption>
-          </figure>
-        </div>
-        <p class="nota">Cuidado con qué se mantiene fijo: con la batería conectada ΔV es
-          constante, y entonces Q y U suben &times;K. Si se desconecta, Q es fijo y entonces
-          ΔV y U bajan ÷K.</p>
-        <div class="res">
-          <div class="rot-sec">Problemas resueltos</div>
-          <div class="tabla-env"><table>
-            <thead><tr><th>Ref.</th><th>Qué pide</th><th>Resultado</th></tr></thead>
-            <tbody>
-            <tr><td>S3P36</td><td>Energía almacenada por una esfera de densidad uniforme</td>
-                <td class="eq">U = 4πρ<sup>2</sup>R<sup>5</sup> / (15ε<sub>0</sub>) = 3kQ<sup>2</sup>/(5R)</td></tr>
-            <tr><td>S3P31 a–f</td><td>Condensador plano con K = 5, ΔV = 300 V</td>
-                <td class="eq">C<sub>K</sub> = 55,3 pF · U = 2,49 μJ</td></tr>
-            <tr><td>S3P31 g</td><td>El mismo, pero esférico (12 y 15 cm)</td>
-                <td class="eq">C<sub>K</sub> = 334 pF · U = 15,0 μJ</td></tr>
-            <tr><td>S3P2</td><td>Campo de q<sub>0</sub> dentro de un cascarón dieléctrico</td>
-                <td class="eq">E = q<sub>0</sub> / (4πε<sub>0</sub>r<sup>2</sup>), ÷K en el medio</td></tr>
-            </tbody>
-          </table></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ U6 ============ -->
-    <section class="lam" id="u6">
-      <div class="lam-cab">
-        <span class="num">06</span>
-        <div><h2>Corriente y circuitos</h2>
-          <p>Cargas en movimiento, lo que se opone a ellas y cómo repartirlas en una malla.</p></div>
-      </div>
-      <div class="lam-cuerpo">
-        <div class="clave">
-          <span class="eq">ΔV = R·I <span class="sep">y</span> <b>J</b> = σ<b>E</b></span>
-          <span class="eq-rot">Ohm, en sus dos formas</span>
-        </div>
-        <div>
-          <div class="rot-sec">Temas</div>
-          <ul class="temas">
-            <li>Densidad de corriente</li><li>Modelo de Drude</li>
-            <li>R en serie y paralelo</li><li>FEM y resistencia interna</li>
-            <li>Kirchhoff</li><li>Circuito RC</li><li>Efecto Joule</li>
-          </ul>
-        </div>
-        <div class="figs">
-          <figure>
-            <img src="fig/c6_kirchhoff.png" alt="Leyes de Kirchhoff de nodos y mallas con criterio de signos" loading="lazy">
-            <figcaption>6.1 — Las dos leyes de Kirchhoff y el criterio de signos completo.</figcaption>
-          </figure>
-          <figure>
-            <img src="fig/c6_rc.png" alt="Carga, corriente y reparto de energía en un circuito RC" loading="lazy">
-            <figcaption>6.2 — Circuito RC: la fuente entrega Cε² y se reparte mitad y mitad.</figcaption>
-          </figure>
-        </div>
-        <p class="nota">En la carga de un RC, exactamente la mitad de la energía que entrega
-          la fuente se disipa en la resistencia, y eso no depende del valor de R: cargar un
-          condensador así tiene como máximo 50 % de rendimiento.</p>
-        <div class="res">
-          <div class="rot-sec">Problemas resueltos</div>
-          <div class="tabla-env"><table>
-            <thead><tr><th>Ref.</th><th>Qué pide</th><th>Resultado</th></tr></thead>
-            <tbody>
-            <tr><td>S3P20</td><td>Resistencia de un tronco de cono</td>
-                <td class="eq">R = ρL / (π·a·b)</td></tr>
-            <tr><td>S3P15 a</td><td>Tubo cilíndrico, corriente radial</td>
-                <td class="eq">R = ρ·ln(b/a) / (2πL)</td></tr>
-            <tr><td>S3P15 b</td><td>Filamento de carbón: a = 0,4 cm, b = 3 cm, L = 30 cm</td>
-                <td class="eq">R ≈ 37,4 μΩ</td></tr>
-            <tr><td>S3P12</td><td>Lectura del amperímetro</td>
-                <td class="eq">I ≈ 0,690 A · I<sub>A</sub> ≈ 0,276 A</td></tr>
-            <tr><td>S3P19</td><td>Constante de tiempo y voltaje en el de 3 μF</td>
-                <td class="eq">τ = 12 μs · ΔV<sub>1</sub> ≈ 5,06 V</td></tr>
-            <tr><td>S3P17</td><td>Tres resistencias del cuarto de anillo</td>
-                <td class="eq">4t/[σπ(b<sup>2</sup>&minus;a<sup>2</sup>)] · 2ln(b/a)/(πtσ) · π/[2σt·ln(b/a)]</td></tr>
-            </tbody>
-          </table></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ LABORATORIOS ============ -->
-    <section class="bloque" id="labs">
-      <div class="bloque-cab">
-        <h2>Laboratorios</h2>
-        <p>Tres prácticas que cierran el círculo entre la teoría y el instrumento.</p>
-      </div>
-      <div class="bloque-cuerpo">
-        <div class="labs">
-
-          <article class="lab">
-            <div class="lab-n">L1</div>
-            <h3>Curvas equipotenciales</h3>
-            <p class="lab-sub">Cuba electrolítica · voltímetro · papel milimetrado</p>
-            <p>Se monta una capa delgada de agua con iones entre dos electrodos y se buscan
-              con el voltímetro los puntos que están al mismo potencial respecto a una
-              referencia. Uniéndolos se dibujan las equipotenciales de tres montajes.</p>
-            <div class="rot-sec">Montajes</div>
-            <ul class="temas"><li>punto – punto</li><li>anillo – anillo</li><li>placa – placa</li></ul>
-            <div class="rot-sec">Qué se comprueba</div>
-            <ul class="lab-lista">
-              <li>Las equipotenciales no se cortan entre sí.</li>
-              <li>Cortan a las líneas de campo siempre a 90°.</li>
-              <li>Donde están más juntas, el campo es más intenso.</li>
-            </ul>
-            <p class="lab-liga">Enlaza con la <a href="#u4">unidad 4</a></p>
-          </article>
-
-          <article class="lab">
-            <div class="lab-n">L2</div>
-            <h3>Osciloscopio</h3>
-            <p class="lab-sub">Generador de señales · circuitos RC y RLC</p>
-            <p>Se usa el osciloscopio primero como instrumento de medida (amplitud, período,
-              frecuencia y desfase) y después para registrar la carga y descarga de un
-              capacitor, comparando la constante de tiempo medida con la calculada.</p>
-            <div class="rot-sec">Qué se mide</div>
-            <ul class="lab-lista">
-              <li>Amplitud, período y frecuencia de señales periódicas.</li>
-              <li>Constante de tiempo <span class="eq">τ = RC</span> en la carga y la descarga.</li>
-              <li>Desfase entre dos señales y figuras en modo XY.</li>
-              <li>Oscilación amortiguada del circuito RLC.</li>
-            </ul>
-            <p class="lab-liga">Enlaza con la <a href="#u6">unidad 6</a></p>
-          </article>
-
-          <article class="lab">
-            <div class="lab-n">L3</div>
-            <h3>Curvas características V–I</h3>
-            <p class="lab-sub">Voltímetro · amperímetro · fuente variable</p>
-            <p>Se varía el voltaje sobre distintos elementos y se registra la corriente, para
-              dibujar su curva V–I. La pendiente dice si el elemento obedece la ley de Ohm
-              o no, y la forma de la curva delata de qué material se trata.</p>
-            <div class="rot-sec">Elementos</div>
-            <ul class="temas"><li>resistores</li><li>foco incandescente</li><li>carbón</li><li>diodo</li></ul>
-            <div class="rot-sec">Qué se concluye</div>
-            <ul class="lab-lista">
-              <li>El resistor da una recta: R constante, es óhmico.</li>
-              <li>El foco se curva al calentarse: R sube con la temperatura.</li>
-              <li>El diodo solo conduce en un sentido y a partir de un umbral.</li>
-            </ul>
-            <p class="lab-liga">Enlaza con la <a href="#u6">unidad 6</a></p>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ FORMULARIO ============ -->
-    <section class="bloque" id="formulario">
-      <div class="bloque-cab">
-        <h2>Formulario</h2>
-        <p>Escribe para filtrar, o toca una unidad. Busca por nombre, símbolo o tema.</p>
-      </div>
-      <div class="bloque-cuerpo">
-        <div class="buscador">
-          <input id="q" type="search" placeholder="gauss, dipolo, RC, capacidad…"
-                 autocomplete="off" aria-label="Buscar fórmula">
-          <span class="cuenta" id="cuenta"></span>
-        </div>
-        <div class="chips" id="chips" role="group" aria-label="Filtrar por unidad">
-          <button type="button" class="chip" data-u="" aria-pressed="true">Todas</button>
-          <button type="button" class="chip" data-u="U1" aria-pressed="false">Carga</button>
-          <button type="button" class="chip" data-u="U2" aria-pressed="false">Campo</button>
-          <button type="button" class="chip" data-u="U3" aria-pressed="false">Gauss</button>
-          <button type="button" class="chip" data-u="U4" aria-pressed="false">Potencial</button>
-          <button type="button" class="chip" data-u="U5" aria-pressed="false">Condensadores</button>
-          <button type="button" class="chip" data-u="U6" aria-pressed="false">Circuitos</button>
-        </div>
-        <ul id="lista"></ul>
-        <p class="vacio" id="vacio" hidden>Nada coincide con esa búsqueda.</p>
-      </div>
-    </section>
-
-    <!-- ============ REFERENCIAS ============ -->
-    <section class="bloque" id="referencias">
-      <div class="bloque-cab">
-        <h2>Referencias y material</h2>
-        <p>Lo que conviene tener a mano para estudiar y para comprobar resultados.</p>
-      </div>
-      <div class="bloque-cuerpo">
-        <div class="refs">
-          <div>
-            <h3>Bibliografía</h3>
-            <ul>
-              <li><b>Sears · Zemansky</b> — Física Universitaria, vol. 2.</li>
-              <li><b>Serway · Jewett</b> — Física para ciencias e ingeniería, vol. 2.</li>
-              <li><b>Halliday · Resnick · Krane</b> — Física, vol. 2. Problemas más exigentes.</li>
-              <li><b>Purcell · Morin</b> — Electricity and Magnetism. Enfoque más conceptual.</li>
-            </ul>
-          </div>
-          <div>
-            <h3>Abierto en línea</h3>
-            <ul>
-              <li><a href="https://openstax.org/details/books/university-physics-volume-2" target="_blank" rel="noopener">OpenStax · University Physics Vol. 2</a> — libre y completo.</li>
-              <li><a href="https://ocw.mit.edu/courses/8-02-physics-ii-electricity-and-magnetism-spring-2007/" target="_blank" rel="noopener">MIT OCW 8.02</a> — electricidad y magnetismo.</li>
-              <li><a href="https://www.feynmanlectures.caltech.edu/II_toc.html" target="_blank" rel="noopener">Feynman Lectures · Vol. II</a> — texto completo.</li>
-            </ul>
-          </div>
-          <div>
-            <h3>Simuladores</h3>
-            <ul>
-              <li><a href="https://phet.colorado.edu/es/simulations/filter?subjects=physics" target="_blank" rel="noopener">PhET</a> — cargas y campos, kits de circuitos.</li>
-              <li><a href="https://www.falstad.com/circuit/" target="_blank" rel="noopener">Falstad Circuit Simulator</a> — armar circuitos y ver la corriente en vivo.</li>
-              <li><a href="https://www.falstad.com/vector3de/" target="_blank" rel="noopener">Falstad 3D Vector Fields</a> — visualizar campos y flujo.</li>
-            </ul>
-          </div>
-          <div>
-            <h3>Constantes</h3>
-            <ul class="const">
-              <li><span class="eq">ε<sub>0</sub> = 8,854&times;10<sup>&minus;12</sup> C<sup>2</sup>/N·m<sup>2</sup></span></li>
-              <li><span class="eq">k = 1/4πε<sub>0</sub> = 8,99&times;10<sup>9</sup> N·m<sup>2</sup>/C<sup>2</sup></span></li>
-              <li><span class="eq">e = 1,602&times;10<sup>&minus;19</sup> C</span></li>
-              <li><span class="eq">a<sub>0</sub> = 0,53&times;10<sup>&minus;10</sup> m</span> <small>radio de Bohr</small></li>
-              <li><span class="eq">ρ<sub>carbón</sub> ≈ 3,5&times;10<sup>&minus;5</sup> Ω·m</span></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-</div>
-
-<footer class="pie">
-  <div class="env pie-in">
-    <span>Guía de estudio de electromagnetismo · figuras propias</span>
-    <span>Hecha con HTML y CSS, sin frameworks</span>
-  </div>
-</footer>
+<footer id="pie"></footer>
 
 <script>
-(function(){
-  "use strict";
-  var F = [
-["U1","Carga","F = <span class='fr'><span class='n'>1</span><span class='d'>4πε<sub>0</sub></span></span><span class='fr'><span class='n'>q<sub>1</sub>q<sub>2</sub></span><span class='d'>r<sup>2</sup></span></span>","Ley de Coulomb entre dos cargas puntuales"],
-["U1","Carga","k = 1/4πε<sub>0</sub> = 8,99&times;10<sup>9</sup> N·m<sup>2</sup>/C<sup>2</sup>","Constante de Coulomb"],
-["U1","Carga","Q = N·e","Cuantización de la carga; e = 1,602&times;10<sup>&minus;19</sup> C"],
-["U1","Carga","Σq = constante","Conservación de la carga en un sistema aislado"],
-["U1","Carga","dq = ρ dv = σ dA = λ dl","Distribuciones de carga continuas"],
-
-["U2","Campo","<b>E</b> = <b>F</b>/q<sub>0</sub>","Definición operacional del campo eléctrico"],
-["U2","Campo","E = kq/r<sup>2</sup>","Campo de una carga puntual"],
-["U2","Campo","<b>E</b> = Σ kq<sub>i</sub>(<b>r</b>&minus;<b>r</b><sub>i</sub>) / |<b>r</b>&minus;<b>r</b><sub>i</sub>|<sup>3</sup>","Distribuciones discretas: superposición"],
-["U2","Campo","<b>E</b> = ∫ k dq (<b>r</b>&minus;<b>r</b>′) / |<b>r</b>&minus;<b>r</b>′|<sup>3</sup>","Distribuciones continuas"],
-["U2","Campo","<b>p</b> = q·<b>d</b>","Momento dipolar eléctrico"],
-["U2","Campo","Φ<sub>E</sub> = ∫ <b>E</b> · d<b>A</b>","Flujo del campo eléctrico"],
-
-["U3","Gauss","∮<sub>S</sub> <b>E</b> · d<b>A</b> = q<sub>enc</sub>/ε<sub>0</sub>","Ley de Gauss; solo cuenta la carga encerrada"],
-["U3","Gauss","E·(4πr<sup>2</sup>) = q<sub>enc</sub>/ε<sub>0</sub>","Simetría esférica"],
-["U3","Gauss","E = λ / (2πε<sub>0</sub>r)","Hilo infinito; gaussiana cilíndrica"],
-["U3","Gauss","E = σ / (2ε<sub>0</sub>)","Lámina plana infinita"],
-["U3","Gauss","E<sub>int</sub> = 0 &nbsp;·&nbsp; V = cte","Conductor en equilibrio electrostático"],
-["U3","Gauss","E<sub>sup</sub> = σ/ε<sub>0</sub>","Campo justo en la superficie de un conductor"],
-["U3","Gauss","E<sub>int</sub> = E<sub>ext</sub>/κ","Aislante polarizado; κ constante dieléctrica"],
-
-["U4","Potencial","ΔV = &minus;∫ <b>E</b> · d<b>r</b>","Diferencia de potencial a partir del campo"],
-["U4","Potencial","V = kq/r","Potencial de una carga puntual, con V(∞) = 0"],
-["U4","Potencial","<b>E</b> = &minus;∇V","El campo es el gradiente del potencial"],
-["U4","Potencial","V = Σ kq<sub>i</sub>/r<sub>i</sub> &nbsp;·&nbsp; V = ∫ k dq/r","Potencial de distribuciones discretas y continuas"],
-["U4","Potencial","E<sub>pe</sub> = kq<sub>1</sub>q<sub>2</sub>/d","Energía potencial de un par de cargas"],
-["U4","Potencial","E<sub>pe</sub> = ½ Σ q<sub>i</sub>V<sub>i</sub> &nbsp;·&nbsp; ½∫ρV dv","Energía de un sistema de cargas"],
-["U4","Potencial","U = 3kQ<sup>2</sup> / (5R)","Esfera uniformemente cargada"],
-["U4","Potencial","V = kp·cos θ / r<sup>2</sup>","Dipolo lejano (r ≫ d)"],
-["U4","Potencial","U = &minus;<b>p</b> · <b>E</b> &nbsp;·&nbsp; <b>τ</b> = <b>p</b> &times; <b>E</b>","Dipolo en un campo externo: energía y torque"],
-
-["U5","Condensadores","C = Q/ΔV","Definición de capacidad; se mide en farad"],
-["U5","Condensadores","C<sub>0</sub> = ε<sub>0</sub>A/d","Condensador de placas paralelas"],
-["U5","Condensadores","C<sub>0</sub> = <span class='fr'><span class='n'>2πε<sub>0</sub>H</span><span class='d'>ln(b/a)</span></span>","Condensador cilíndrico"],
-["U5","Condensadores","C<sub>0</sub> = <span class='fr'><span class='n'>4πε<sub>0</sub>ab</span><span class='d'>b&minus;a</span></span>","Condensador esférico"],
-["U5","Condensadores","C = 4πε<sub>0</sub>R","Esfera conductora aislada"],
-["U5","Condensadores","1/C<sub>eq</sub> = Σ 1/C<sub>i</sub>","Condensadores en serie; misma carga"],
-["U5","Condensadores","C<sub>eq</sub> = Σ C<sub>i</sub>","Condensadores en paralelo; mismo ΔV"],
-["U5","Condensadores","U = ½QΔV = ½CΔV<sup>2</sup> = Q<sup>2</sup>/2C","Energía almacenada"],
-["U5","Condensadores","u = ½εE<sup>2</sup>","Densidad de energía del campo"],
-["U5","Condensadores","K = ε/ε<sub>0</sub> = 1 + χ &nbsp;·&nbsp; C<sub>K</sub> = K·C<sub>0</sub>","Constante dieléctrica"],
-["U5","Condensadores","<b>D</b> = ε<sub>0</sub><b>E</b> + <b>P</b> &nbsp;·&nbsp; ∮<b>D</b>·d<b>A</b> = q<sub>libre</sub>","Ley de Gauss con dieléctricos"],
-["U5","Condensadores","<b>P</b> = ε<sub>0</sub>χ<b>E</b> &nbsp;·&nbsp; σ<sub>p</sub> = <b>P</b>·<b>n</b>","Polarización y cargas ligadas"],
-
-["U6","Circuitos","I = dq/dt &nbsp;·&nbsp; I = ∫ <b>J</b> · d<b>A</b>","Intensidad y densidad de corriente"],
-["U6","Circuitos","<b>J</b> = n q <b>v</b><sub>d</sub> = σ<b>E</b>","Ley de Ohm microscópica"],
-["U6","Circuitos","ΔV = R·I","Ley de Ohm macroscópica"],
-["U6","Circuitos","R = ρL/A = L/(σA)","Resistencia de un conductor óhmico"],
-["U6","Circuitos","σ = nq<sup>2</sup>τ/m","Conductividad según el modelo de Drude"],
-["U6","Circuitos","R<sub>eq</sub> = Σ R<sub>i</sub>","Resistencias en serie; misma corriente"],
-["U6","Circuitos","1/R<sub>eq</sub> = Σ 1/R<sub>i</sub>","Resistencias en paralelo; mismo ΔV"],
-["U6","Circuitos","Σ I<sub>entra</sub> = Σ I<sub>sale</sub>","Primera ley de Kirchhoff: nodos"],
-["U6","Circuitos","Σ ΔV = 0","Segunda ley de Kirchhoff: mallas"],
-["U6","Circuitos","q(t) = Cε(1 &minus; e<sup>&minus;t/RC</sup>)","Carga del condensador en un circuito RC"],
-["U6","Circuitos","i(t) = (ε/R)·e<sup>&minus;t/RC</sup> &nbsp;·&nbsp; τ = RC","Corriente y constante de tiempo"],
-["U6","Circuitos","P = ΔV·I = RI<sup>2</sup> = ΔV<sup>2</sup>/R","Potencia y efecto Joule"]
-  ];
-
-  var lista=document.getElementById("lista"), vacio=document.getElementById("vacio"),
-      cuenta=document.getElementById("cuenta"), q=document.getElementById("q"),
-      chips=document.getElementById("chips"), uni="";
-
-  function norm(s){
-    return s.replace(/<[^>]*>/g,"").toLowerCase()
-            .normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+/* Mini simulador del héroe: vectores de campo de un dipolo; −q sigue al puntero. */
+document.addEventListener("DOMContentLoaded",function(){
+  var cv=document.getElementById("mini"), cx=cv.getContext("2d"), W=0, H=0,
+      pos={x:.32,y:.5}, neg={x:.68,y:.5};
+  function tam(){
+    var r=cv.getBoundingClientRect(), d=window.devicePixelRatio||1;
+    W=r.width; H=r.height; cv.width=Math.round(W*d); cv.height=Math.round(H*d);
+    cx.setTransform(d,0,0,d,0,0); dibuja();
   }
-
-  var nodos = F.map(function(f){
-    var li=document.createElement("li");
-    var d=document.createElement("div"); d.className="fx";
-    var e=document.createElement("span"); e.className="eq"; e.innerHTML=f[2];
-    var em=document.createElement("em"); em.textContent=f[3];
-    d.appendChild(e); d.appendChild(em);
-    var t=document.createElement("span"); t.className="tag"; t.textContent=f[1];
-    li.appendChild(d); li.appendChild(t); lista.appendChild(li);
-    return {el:li,u:f[0],busca:norm(f[1]+" "+f[2]+" "+f[3])};
-  });
-
-  function pintar(){
-    var t=norm(q.value.trim()), n=0;
-    nodos.forEach(function(x){
-      var ok=(!uni||x.u===uni)&&(!t||x.busca.indexOf(t)!==-1);
-      x.el.hidden=!ok; if(ok)n++;
+  function campo(x,y){
+    var ex=0,ey=0;
+    [[pos,1],[neg,-1]].forEach(function(c){
+      var dx=x-c[0].x*W, dy=y-c[0].y*H, r2=dx*dx+dy*dy+60, r3=r2*Math.sqrt(r2);
+      ex+=c[1]*dx/r3; ey+=c[1]*dy/r3;
     });
-    vacio.hidden=n!==0;
-    cuenta.textContent=n+(n===1?" fórmula":" fórmulas");
+    return [ex,ey];
   }
-
-  q.addEventListener("input",pintar);
-  chips.addEventListener("click",function(ev){
-    var b=ev.target.closest(".chip"); if(!b)return;
-    uni=b.dataset.u;
-    Array.prototype.forEach.call(chips.querySelectorAll(".chip"),function(c){
-      c.setAttribute("aria-pressed",String(c===b));
-    });
-    pintar();
-  });
-  pintar();
-
-  var enlaces=Array.prototype.slice.call(document.querySelectorAll('.rail a[href^="#"]')),
-      mapa={};
-  enlaces.forEach(function(a){ mapa[a.getAttribute("href").slice(1)]=a; });
-  if("IntersectionObserver" in window){
-    var obs=new IntersectionObserver(function(ent){
-      ent.forEach(function(e){
-        var a=mapa[e.target.id]; if(!a||!e.isIntersecting)return;
-        enlaces.forEach(function(x){x.classList.remove("on");});
-        a.classList.add("on");
-      });
-    },{rootMargin:"-12% 0px -72% 0px"});
-    Object.keys(mapa).forEach(function(id){
-      var s=document.getElementById(id); if(s)obs.observe(s);
+  function dibuja(){
+    if(!W) return;
+    var col=CC.color("--ink2"), paso=Math.max(22,W/18);
+    cx.clearRect(0,0,W,H);
+    cx.strokeStyle=col; cx.fillStyle=col; cx.lineWidth=1.4;
+    for(var y=paso/2;y<H;y+=paso) for(var x=paso/2;x<W;x+=paso){
+      var e=campo(x,y), m=Math.hypot(e[0],e[1]); if(!m) continue;
+      var L=paso*.4, ux=e[0]/m, uy=e[1]/m;
+      cx.globalAlpha=Math.min(1,.2+Math.log10(1+m*4e4)/2.2);
+      cx.beginPath(); cx.moveTo(x-ux*L,y-uy*L); cx.lineTo(x+ux*L,y+uy*L); cx.stroke();
+      var px=x+ux*L, py=y+uy*L;
+      cx.beginPath(); cx.moveTo(px,py);
+      cx.lineTo(px-ux*5-uy*3.2,py-uy*5+ux*3.2); cx.lineTo(px-ux*5+uy*3.2,py-uy*5-ux*3.2); cx.fill();
+    }
+    cx.globalAlpha=1;
+    [[pos,"--coral","+"],[neg,"--pri","−"]].forEach(function(c){
+      cx.fillStyle=CC.color(c[1]); cx.beginPath(); cx.arc(c[0].x*W,c[0].y*H,13,0,7); cx.fill();
+      cx.fillStyle="#fff"; cx.font="700 17px sans-serif"; cx.textAlign="center"; cx.textBaseline="middle";
+      cx.fillText(c[2],c[0].x*W,c[0].y*H+1);
     });
   }
-})();
+  function mover(ev){
+    var r=cv.getBoundingClientRect();
+    neg.x=Math.min(.97,Math.max(.03,(ev.clientX-r.left)/r.width));
+    neg.y=Math.min(.95,Math.max(.05,(ev.clientY-r.top)/r.height));
+    dibuja();
+  }
+  cv.addEventListener("pointermove",mover);
+  cv.addEventListener("pointerdown",mover);
+  window.addEventListener("resize",tam);
+  document.addEventListener("cc-tema",dibuja);
+  tam();
+});
 </script>
-
 </body>
 </html>

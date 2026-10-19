@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Teoría · Campo y Corriente</title>
+<meta name="description" content="Las seis unidades de electrostática y circuitos DC: fórmula clave, temas, figuras y notas.">
+<script>try{var t=localStorage.getItem("cc-tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/estilo.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/comun.js"></script>
+<style>
+.cuerpo{display:grid;grid-template-columns:220px minmax(0,1fr);gap:32px;align-items:start;padding-bottom:20px}
+.rail{position:sticky;top:84px;padding:14px}
+.rail h2{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);margin:4px 8px 8px}
+.rail ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.rail a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;text-decoration:none;
+  color:var(--ink2);font-weight:600;font-size:.92rem}
+.rail a i{font-style:normal;width:24px;height:24px;border-radius:8px;display:grid;place-items:center;
+  font-size:.78rem;font-weight:800;background:var(--u-sv);color:var(--u);flex:none}
+.rail a:hover{background:var(--bg2);color:var(--ink)}
+.rail a.on{background:var(--u-sv);color:var(--ink)}
+.unidad{padding:24px;margin-bottom:22px;scroll-margin-top:84px;display:grid;gap:20px}
+.u-cab{display:flex;gap:16px;align-items:flex-start}
+.u-cab>div{min-width:0}
+.u-num{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;flex:none;
+  font-family:var(--f-tit);font-weight:800;font-size:1.4rem;background:var(--u);color:#fff}
+.u-cab h2{font-size:1.65rem;font-weight:800}
+.u-cab p{color:var(--ink2);margin-top:4px}
+.sub{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);margin-bottom:8px}
+.explica{display:grid;gap:12px}
+.explica p{max-width:75ch}
+.enlaces{display:flex;flex-wrap:wrap;gap:8px;padding-top:4px;border-top:1px dashed var(--line);padding-top:16px}
+@media (max-width:900px){
+  .cuerpo{grid-template-columns:1fr;gap:16px}
+  .rail{position:static}
+  .rail ol{flex-direction:row;flex-wrap:wrap}
+  .unidad{padding:18px}
+  .u-cab h2{font-size:1.4rem}
+}
+</style>
+</head>
+<body>
+<a class="salta" href="#contenido">Saltar al contenido</a>
+<header id="cabecera"></header>
+
+<main id="contenido">
+  <section class="heroe" style="padding-bottom:18px">
+    <div class="env">
+      <span class="ceja">Teoría</span>
+      <h1>Las seis unidades, <span>explicadas sin vueltas</span></h1>
+      <p class="lead">Cada unidad empieza con la fórmula que más vas a usar, luego la idea física,
+        las figuras y un enlace directo a su demostración, simulador y problemas.</p>
+    </div>
+  </section>
+
+  <div class="env cuerpo">
+    <nav class="tarjeta rail" aria-label="Unidades">
+      <h2>Unidades</h2>
+      <ol>
+        <li class="c-u1"><a href="#u1"><i>1</i>Carga y materia</a></li>
+        <li class="c-u2"><a href="#u2"><i>2</i>Campo eléctrico</a></li>
+        <li class="c-u3"><a href="#u3"><i>3</i>Ley de Gauss</a></li>
+        <li class="c-u4"><a href="#u4"><i>4</i>Potencial</a></li>
+        <li class="c-u5"><a href="#u5"><i>5</i>Condensadores</a></li>
+        <li class="c-u6"><a href="#u6"><i>6</i>Circuitos</a></li>
+      </ol>
+    </nav>
+
+    <div>
+      <!-- U1 -->
+      <section class="tarjeta unidad c-u1" id="u1">
+        <div class="u-cab"><span class="u-num">1</span>
+          <div><h2>Carga y materia</h2><p>Qué es la carga, por qué viene en paquetes y cómo se atraen dos de ellas.</p></div></div>
+        <div class="formula-grande">\(\displaystyle F=\frac{1}{4\pi\varepsilon_0}\,\frac{|q_1q_2|}{r^2}\)<small>Ley de Coulomb</small></div>
+        <div class="explica">
+          <p>La carga eléctrica es una propiedad de la materia que viene en múltiplos enteros de la carga
+            elemental: \(Q=Ne\), con \(e=1{,}602\times10^{-19}\,\text{C}\). En un sistema aislado la carga total
+            se conserva: puede pasar de un cuerpo a otro, pero no se crea ni se destruye.</p>
+          <p>Dos cargas puntuales se empujan o se atraen sobre la recta que las une, con una fuerza que cae
+            con el cuadrado de la distancia. Si hay más cargas, cada par actúa por su cuenta y las fuerzas se
+            suman como vectores (<b>superposición</b>).</p>
+        </div>
+        <div><div class="sub">Temas</div>
+          <ul class="pildoras"><li>Polarización</li><li>Cuantización \(Q=Ne\)</li><li>Conservación</li>
+            <li>Formas de electrizar</li><li>Gota de Millikan</li><li>Distribuciones \(\rho,\sigma,\lambda\)</li></ul></div>
+        <div class="figs">
+          <figure><img src="fig/c1_coulomb.png" alt="Fuerza de Coulomb entre dos cargas puntuales" loading="lazy">
+            <figcaption>1.1 — Fuerza entre dos cargas: misma recta, sentidos opuestos.</figcaption></figure>
+          <figure><img src="fig/c1_millikan.png" alt="Experimento de la gota de aceite de Millikan" loading="lazy">
+            <figcaption>1.2 — Gota de Millikan: equilibrio entre peso y fuerza eléctrica.</figcaption></figure>
+        </div>
+        <p class="nota"><b>Dato:</b> el salto de carga es tan pequeño que en problemas macroscópicos se trata la
+          carga como continua. Un coulomb son unas \(6{,}24\times10^{18}\) cargas elementales.</p>
+        <div class="enlaces">
+          <a class="btn sec peq" href="demostraciones.html#coulomb">Demostración: campo de un hilo</a>
+          <a class="btn sec peq" href="simuladores.html#campo">Simulador de cargas</a>
+          <a class="btn sec peq" href="problemas.html#u1">Problemas de la unidad</a>
+        </div>
+      </section>
+
+      <!-- U2 -->
+      <section class="tarjeta unidad c-u2" id="u2">
+        <div class="u-cab"><span class="u-num">2</span>
+          <div><h2>Campo eléctrico</h2><p>Del «actúa a distancia» al campo: la carga modifica el espacio que la rodea.</p></div></div>
+        <div class="formula-grande">\(\displaystyle \vec E=\frac{\vec F}{q_0}\qquad E=\frac{kq}{r^2}\)<small>Definición y carga puntual</small></div>
+        <div class="explica">
+          <p>En vez de pensar que una carga «sabe» dónde está la otra, decimos que cada carga crea un
+            <b>campo</b> \(\vec E\) en todo el espacio, y que otra carga \(q_0\) colocada ahí siente
+            \(\vec F=q_0\vec E\). El campo de varias cargas es la suma vectorial de los campos de cada una.</p>
+          <p>Para distribuciones continuas se divide el objeto en trocitos \(dq\) y se integra:
+            \(\vec E=\int k\,dq\,\hat r/r^2\). El <b>dipolo</b> (dos cargas iguales y opuestas) aparece en
+            todas partes: moléculas, antenas y materiales polarizados.</p>
+        </div>
+        <div><div class="sub">Temas</div>
+          <ul class="pildoras"><li>Superposición</li><li>Líneas de fuerza</li><li>Dipolo eléctrico</li>
+            <li>Distribuciones continuas</li><li>Flujo eléctrico</li></ul></div>
+        <div class="figs">
+          <figure><img src="fig/c2_lineas.png" alt="Líneas de campo: carga positiva, negativa, dipolo y dos cargas iguales" loading="lazy">
+            <figcaption>2.1 — Cuatro configuraciones básicas de líneas de fuerza.</figcaption></figure>
+          <figure><img src="fig/c2_dipolo.png" alt="Dipolo eléctrico y su momento dipolar" loading="lazy">
+            <figcaption>2.2 — Dipolo: dos cargas iguales y opuestas separadas una distancia d.</figcaption></figure>
+        </div>
+        <p class="nota idea"><b>Idea clave:</b> las líneas de fuerza no son trayectorias. Donde se juntan, \(E\) es
+          mayor, y nunca se cruzan, porque en un punto el campo tiene una sola dirección.</p>
+        <div class="enlaces">
+          <a class="btn sec peq" href="demostraciones.html#coulomb">Demostración: campo de un hilo</a>
+          <a class="btn sec peq" href="simuladores.html#campo">Simulador de líneas de campo</a>
+        </div>
+      </section>
+
+      <!-- U3 -->
+      <section class="tarjeta unidad c-u3" id="u3">
+        <div class="u-cab"><span class="u-num">3</span>
+          <div><h2>Ley de Gauss</h2><p>Cuando hay simetría, el flujo resuelve en dos líneas lo que la integral no.</p></div></div>
+        <div class="formula-grande">\(\displaystyle \oint_S \vec E\cdot d\vec A=\frac{q_{\text{enc}}}{\varepsilon_0}\)<small>Solo cuenta la carga encerrada</small></div>
+        <div class="explica">
+          <p>El flujo eléctrico mide cuántas líneas de campo atraviesan una superficie. Gauss dice que el
+            flujo total a través de una superficie <b>cerrada</b> depende solo de la carga que queda dentro,
+            sin importar la forma de la superficie ni las cargas de afuera.</p>
+          <p>La ley siempre es cierta, pero solo es <b>útil</b> cuando la simetría permite sacar \(E\) de la
+            integral: esférica, cilíndrica o plana. En un conductor en equilibrio el campo interior es cero y
+            toda la carga neta se va a la superficie.</p>
+        </div>
+        <div><div class="sub">Temas</div>
+          <ul class="pildoras"><li>Simetría esférica</li><li>Cilíndrica</li><li>Plana</li>
+            <li>Gauss ⇒ Coulomb</li><li>Conductores</li><li>Aislantes</li></ul></div>
+        <div class="figs">
+          <figure><img src="fig/c3_simetrias.png" alt="Simetría esférica, cilíndrica y plana con su superficie gaussiana" loading="lazy">
+            <figcaption>3.1 — Las tres simetrías básicas y la gaussiana que le toca a cada una.</figcaption></figure>
+          <figure><img src="fig/c3_hidrogeno.png" alt="Densidad, carga encerrada y campo del átomo de hidrógeno" loading="lazy">
+            <figcaption>3.2 — Densidad, carga encerrada y campo del átomo de hidrógeno.</figcaption></figure>
+        </div>
+        <p class="nota alerta"><b>Error común:</b> confundir \(q_{\text{enc}}\) con la carga total del sistema.
+          Si la gaussiana corta un objeto cargado, solo cuenta el trozo de adentro.</p>
+        <div class="enlaces">
+          <a class="btn sec peq" href="demostraciones.html#gauss">Demostración de la ley de Gauss</a>
+          <a class="btn sec peq" href="simuladores.html#gauss">Simulador de gaussiana</a>
+          <a class="btn sec peq" href="problemas.html#u3">Problemas de la unidad</a>
+        </div>
+      </section>
+
+      <!-- U4 -->
+      <section class="tarjeta unidad c-u4" id="u4">
+        <div class="u-cab"><span class="u-num">4</span>
+          <div><h2>Potencial y energía</h2><p>Un campo escalar que se suma como número y del que sale \(\vec E\) derivando.</p></div></div>
+        <div class="formula-grande">\(\displaystyle \Delta V=-\int \vec E\cdot d\vec r\qquad \vec E=-\nabla V\)<small>Las dos direcciones entre V y E</small></div>
+        <div class="explica">
+          <p>El potencial \(V\) es la energía potencial por unidad de carga. Como es un número y no un vector,
+            sumar potenciales es mucho más fácil que sumar campos: \(V=\sum kq_i/r_i\). Luego el campo se
+            recupera derivando: apunta hacia donde \(V\) baja más rápido.</p>
+          <p>Las <b>superficies equipotenciales</b> son los lugares con el mismo \(V\). Moverse sobre ellas
+            no cuesta trabajo, y por eso el campo siempre las corta en ángulo recto.</p>
+        </div>
+        <div><div class="sub">Temas</div>
+          <ul class="pildoras"><li>Superficies equipotenciales</li><li>Energía potencial</li>
+            <li>Dipolo lejano</li><li>Continuidad de V</li><li>Torque sobre un dipolo</li></ul></div>
+        <div class="figs">
+          <figure><img src="fig/c4_equipotenciales.png" alt="Equipotenciales y líneas de campo en carga puntual, dipolo y campo uniforme" loading="lazy">
+            <figcaption>4.1 — Equipotenciales y líneas de campo: siempre se cortan a 90°.</figcaption></figure>
+          <figure><img src="fig/c4_anillo.png" alt="Potencial en el eje de un anillo cargado" loading="lazy">
+            <figcaption>4.2 — Potencial del anillo en su eje; cerca del centro es una parábola.</figcaption></figure>
+        </div>
+        <p class="nota idea"><b>¿Por qué \(\vec E\perp\) equipotencial?</b> Al moverse un \(d\vec r\) sobre ella,
+          \(V\) no cambia: \(dV=-\vec E\cdot d\vec r=0\). Como \(d\vec r\neq0\), entonces \(\vec E\perp d\vec r\).</p>
+        <div class="enlaces">
+          <a class="btn sec peq" href="demostraciones.html#anillo">Demostración: potencial del anillo</a>
+          <a class="btn sec peq" href="demostraciones.html#esfera">Demostración: energía de la esfera</a>
+          <a class="btn sec peq" href="problemas.html#u4">Problemas de la unidad</a>
+        </div>
+      </section>
+
+      <!-- U5 -->
+      <section class="tarjeta unidad c-u5" id="u5">
+        <div class="u-cab"><span class="u-num">5</span>
+          <div><h2>Condensadores y dieléctricos</h2><p>Guardar carga y energía, y qué cambia cuando el hueco deja de estar vacío.</p></div></div>
+        <div class="formula-grande">\(\displaystyle C=\frac{Q}{\Delta V}\qquad C_K=K\,C_0\)<small>Capacidad y dieléctrico</small></div>
+        <div class="explica">
+          <p>Un condensador son dos conductores con cargas \(+Q\) y \(-Q\). Su capacidad \(C\) depende solo de la
+            geometría (y del material entre ellos), no de cuánta carga tenga. La energía queda guardada en el
+            campo: \(U=\tfrac12 C\,\Delta V^2\), con densidad \(u=\tfrac12\varepsilon E^2\).</p>
+          <p>Un <b>dieléctrico</b> se polariza y crea un campo opuesto que debilita al original por un factor
+            \(K\). Resultado: a igual carga, menos voltaje, y la capacidad sube \(K\) veces.</p>
+        </div>
+        <div><div class="sub">Temas</div>
+          <ul class="pildoras"><li>Plano, cilíndrico, esférico</li><li>Serie y paralelo</li>
+            <li>Energía y densidad u</li><li>Constante K</li><li>Vectores D, E, P</li><li>Gauss con dieléctricos</li></ul></div>
+        <div class="figs">
+          <figure><img src="fig/c5_geometrias.png" alt="Condensador plano, cilíndrico y esférico con sus capacidades" loading="lazy">
+            <figcaption>5.1 — Las tres geometrías clásicas y su capacidad en el vacío.</figcaption></figure>
+          <figure><img src="fig/c5_s3p36.png" alt="Campo, densidad de energía y reparto dentro y fuera de una esfera" loading="lazy">
+            <figcaption>5.2 — Solo 1/6 de la energía queda dentro de la esfera cargada.</figcaption></figure>
+        </div>
+        <p class="nota"><b>Cuidado con qué queda fijo:</b> con la batería conectada \(\Delta V\) es constante, y
+          entonces \(Q\) y \(U\) suben \(\times K\). Si se desconecta, \(Q\) es fijo y entonces \(\Delta V\) y \(U\) bajan \(\div K\).</p>
+        <div class="enlaces">
+          <a class="btn sec peq" href="demostraciones.html#capacitor">Demostración: energía del condensador</a>
+          <a class="btn sec peq" href="simuladores.html#condensador">Calculadora de condensadores</a>
+          <a class="btn sec peq" href="problemas.html#u5">Problemas de la unidad</a>
+        </div>
+      </section>
+
+      <!-- U6 -->
+      <section class="tarjeta unidad c-u6" id="u6">
+        <div class="u-cab"><span class="u-num">6</span>
+          <div><h2>Corriente y circuitos</h2><p>Cargas en movimiento, lo que se opone a ellas y cómo repartirlas en una malla.</p></div></div>
+        <div class="formula-grande">\(\displaystyle \Delta V=R\,I\qquad \vec J=\sigma\vec E\)<small>Ohm, en sus dos formas</small></div>
+        <div class="explica">
+          <p>La corriente \(I=dq/dt\) es carga que pasa por segundo. En un conductor óhmico la densidad de
+            corriente es proporcional al campo, \(\vec J=\sigma\vec E\), y de ahí sale la ley de Ohm
+            \(\Delta V=RI\) con \(R=\rho L/A\). El modelo de Drude explica \(\sigma\) con choques de electrones.</p>
+          <p>Para resolver circuitos bastan las dos leyes de <b>Kirchhoff</b>: lo que entra a un nodo sale, y
+            la suma de voltajes en una malla cerrada es cero. Con un condensador aparece el tiempo: el circuito
+            <b>RC</b> se carga con constante \(\tau=RC\).</p>
+        </div>
+        <div><div class="sub">Temas</div>
+          <ul class="pildoras"><li>Densidad de corriente</li><li>Modelo de Drude</li><li>R en serie y paralelo</li>
+            <li>FEM y resistencia interna</li><li>Kirchhoff</li><li>Circuito RC</li><li>Efecto Joule</li></ul></div>
+        <div class="figs">
+          <figure><img src="fig/c6_kirchhoff.png" alt="Leyes de Kirchhoff de nodos y mallas con criterio de signos" loading="lazy">
+            <figcaption>6.1 — Las dos leyes de Kirchhoff y el criterio de signos completo.</figcaption></figure>
+          <figure><img src="fig/c6_rc.png" alt="Carga, corriente y reparto de energía en un circuito RC" loading="lazy">
+            <figcaption>6.2 — Circuito RC: la fuente entrega Cε² y se reparte mitad y mitad.</figcaption></figure>
+        </div>
+        <p class="nota idea"><b>Sorpresa:</b> al cargar un RC, exactamente la mitad de la energía que entrega la
+          fuente se disipa en la resistencia, sin importar el valor de \(R\).</p>
+        <div class="enlaces">
+          <a class="btn sec peq" href="demostraciones.html#rc">Demostración: carga del RC</a>
+          <a class="btn sec peq" href="simuladores.html#rc">Simulador RC</a>
+          <a class="btn sec peq" href="problemas.html#u6">Problemas de la unidad</a>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer id="pie"></footer>
+
+<script>
+/* Marca en el índice la unidad que está en pantalla. */
+document.addEventListener("DOMContentLoaded",function(){
+  var links=[].slice.call(document.querySelectorAll('.rail a')), mapa={};
+  links.forEach(function(a){ mapa[a.getAttribute("href").slice(1)]=a; });
+  if(!("IntersectionObserver" in window)) return;
+  var obs=new IntersectionObserver(function(ent){
+    ent.forEach(function(e){
+      if(!e.isIntersecting) return;
+      links.forEach(function(x){ x.classList.remove("on"); });
+      mapa[e.target.id].classList.add("on");
+    });
+  },{rootMargin:"-20% 0px -70% 0px"});
+  Object.keys(mapa).forEach(function(id){ obs.observe(document.getElementById(id)); });
+});
+</script>
+</body>
+</html>

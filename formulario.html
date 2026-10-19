@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Formulario · Campo y Corriente</title>
+<meta name="description" content="51 fórmulas de electrostática y circuitos DC con buscador y filtro por unidad.">
+<script>try{var t=localStorage.getItem("cc-tema");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/estilo.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/comun.js"></script>
+<style>
+.buscador{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:14px;padding:16px;position:sticky;top:74px;z-index:5}
+.buscador input{flex:1 1 260px;font-size:1rem;padding:11px 14px}
+.cuenta{font-weight:700;color:var(--ink2);font-size:.9rem;font-variant-numeric:tabular-nums}
+.lista{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));list-style:none;margin:18px 0 0;padding:0}
+.lista li{padding:16px 18px;display:grid;gap:8px;border-top:4px solid var(--u)}
+.lista .f{overflow-x:auto;overflow-y:hidden;font-size:1.08rem;padding:4px 0}
+.lista p{font-size:.9rem;color:var(--ink2)}
+.lista .pie-f{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.copiar{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:4px 10px;font-size:.78rem;font-weight:700;cursor:pointer;color:var(--ink2)}
+.copiar:hover{color:var(--ink);border-color:var(--ink2)}
+.vacio{padding:30px;text-align:center;color:var(--ink2)}
+.const{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));margin-top:10px}
+.const div{padding:14px 16px}
+.const small{display:block;color:var(--ink2);font-size:.8rem;margin-top:2px}
+@media (max-width:700px){.buscador{top:68px}}
+</style>
+</head>
+<body>
+<a class="salta" href="#contenido">Saltar al contenido</a>
+<header id="cabecera"></header>
+
+<main id="contenido">
+  <section class="heroe" style="padding-bottom:18px">
+    <div class="env">
+      <span class="ceja">Repaso rápido</span>
+      <h1>Formulario <span>con buscador</span></h1>
+      <p class="lead">Escribe un tema, un símbolo o una palabra (gauss, dipolo, RC, energía…) o filtra por unidad.
+        Puedes copiar cualquier fórmula en LaTeX para tus apuntes.</p>
+    </div>
+  </section>
+
+  <div class="env">
+    <div class="tarjeta buscador">
+      <input type="search" id="q" placeholder="Buscar: gauss, dipolo, RC, capacidad…" autocomplete="off" aria-label="Buscar fórmula">
+      <span class="cuenta" id="cuenta"></span>
+      <div class="seg" id="chips" role="group" aria-label="Filtrar por unidad" style="flex-basis:100%">
+        <button type="button" data-u="" aria-pressed="true">Todas</button>
+        <button type="button" data-u="U1" aria-pressed="false">Carga</button>
+        <button type="button" data-u="U2" aria-pressed="false">Campo</button>
+        <button type="button" data-u="U3" aria-pressed="false">Gauss</button>
+        <button type="button" data-u="U4" aria-pressed="false">Potencial</button>
+        <button type="button" data-u="U5" aria-pressed="false">Condensadores</button>
+        <button type="button" data-u="U6" aria-pressed="false">Circuitos</button>
+      </div>
+    </div>
+    <ul class="lista" id="lista"></ul>
+    <p class="vacio" id="vacio" hidden>Nada coincide con esa búsqueda. Prueba con otra palabra.</p>
+
+    <section class="seccion">
+      <div class="sec-cab"><h2>Constantes</h2><p>Los valores que más vas a necesitar.</p></div>
+      <div class="const">
+        <div class="tarjeta">\(\varepsilon_0=8{,}854\times10^{-12}\ \text{C}^2/\text{N·m}^2\)<small>permitividad del vacío</small></div>
+        <div class="tarjeta">\(k=\dfrac{1}{4\pi\varepsilon_0}=8{,}99\times10^{9}\ \text{N·m}^2/\text{C}^2\)<small>constante de Coulomb</small></div>
+        <div class="tarjeta">\(e=1{,}602\times10^{-19}\ \text{C}\)<small>carga elemental</small></div>
+        <div class="tarjeta">\(a_0=0{,}53\times10^{-10}\ \text{m}\)<small>radio de Bohr</small></div>
+        <div class="tarjeta">\(\rho_{\text{carbón}}\approx3{,}5\times10^{-5}\ \Omega\cdot\text{m}\)<small>resistividad del carbón</small></div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer id="pie"></footer>
+
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+  var r=String.raw;
+  var F=[
+["U1","Carga",r`F=\frac{1}{4\pi\varepsilon_0}\frac{|q_1q_2|}{r^2}`,"Ley de Coulomb entre dos cargas puntuales"],
+["U1","Carga",r`k=\frac{1}{4\pi\varepsilon_0}=8{,}99\times10^9\ \text{N·m}^2/\text{C}^2`,"Constante de Coulomb"],
+["U1","Carga",r`Q=N\,e`,"Cuantización de la carga; e = 1,602×10⁻¹⁹ C"],
+["U1","Carga",r`\sum q=\text{constante}`,"Conservación de la carga en un sistema aislado"],
+["U1","Carga",r`dq=\rho\,dV=\sigma\,dA=\lambda\,dl`,"Distribuciones de carga continuas"],
+
+["U2","Campo",r`\vec E=\frac{\vec F}{q_0}`,"Definición operacional del campo eléctrico"],
+["U2","Campo",r`E=\frac{kq}{r^2}`,"Campo de una carga puntual"],
+["U2","Campo",r`\vec E=\sum_i\frac{kq_i(\vec r-\vec r_i)}{|\vec r-\vec r_i|^3}`,"Distribuciones discretas: superposición"],
+["U2","Campo",r`\vec E=\int\frac{k\,dq\,(\vec r-\vec r_s)}{|\vec r-\vec r_s|^3}`,"Distribuciones continuas; r_s es la posición de cada dq"],
+["U2","Campo",r`\vec p=q\,\vec d`,"Momento dipolar eléctrico"],
+["U2","Campo",r`\Phi_E=\int\vec E\cdot d\vec A`,"Flujo del campo eléctrico"],
+
+["U3","Gauss",r`\oint_S\vec E\cdot d\vec A=\frac{q_{\text{enc}}}{\varepsilon_0}`,"Ley de Gauss; solo cuenta la carga encerrada"],
+["U3","Gauss",r`E\,(4\pi r^2)=\frac{q_{\text{enc}}}{\varepsilon_0}`,"Simetría esférica"],
+["U3","Gauss",r`E=\frac{\lambda}{2\pi\varepsilon_0 r}`,"Hilo infinito; gaussiana cilíndrica"],
+["U3","Gauss",r`E=\frac{\sigma}{2\varepsilon_0}`,"Lámina plana infinita"],
+["U3","Gauss",r`E_{\text{int}}=0\qquad V=\text{cte}`,"Conductor en equilibrio electrostático"],
+["U3","Gauss",r`E_{\text{sup}}=\frac{\sigma}{\varepsilon_0}`,"Campo justo en la superficie de un conductor"],
+["U3","Gauss",r`E_{\text{int}}=\frac{E_{\text{ext}}}{\kappa}`,"Aislante polarizado; κ constante dieléctrica"],
+
+["U4","Potencial",r`\Delta V=-\int\vec E\cdot d\vec r`,"Diferencia de potencial a partir del campo"],
+["U4","Potencial",r`V=\frac{kq}{r}`,"Potencial de una carga puntual, con V(∞) = 0"],
+["U4","Potencial",r`\vec E=-\nabla V`,"El campo es menos el gradiente del potencial"],
+["U4","Potencial",r`V=\sum\frac{kq_i}{r_i}\qquad V=\int\frac{k\,dq}{r}`,"Potencial de distribuciones discretas y continuas"],
+["U4","Potencial",r`E_{pe}=\frac{kq_1q_2}{d}`,"Energía potencial de un par de cargas"],
+["U4","Potencial",r`E_{pe}=\tfrac12\sum q_iV_i=\tfrac12\int\rho V\,dV`,"Energía de un sistema de cargas"],
+["U4","Potencial",r`U=\frac{3kQ^2}{5R}`,"Energía de una esfera uniformemente cargada"],
+["U4","Potencial",r`V=\frac{kp\cos\theta}{r^2}`,"Dipolo lejano (r ≫ d)"],
+["U4","Potencial",r`U=-\vec p\cdot\vec E\qquad\vec\tau=\vec p\times\vec E`,"Dipolo en un campo externo: energía y torque"],
+
+["U5","Condensadores",r`C=\frac{Q}{\Delta V}`,"Definición de capacidad; se mide en farad"],
+["U5","Condensadores",r`C_0=\frac{\varepsilon_0A}{d}`,"Condensador de placas paralelas"],
+["U5","Condensadores",r`C_0=\frac{2\pi\varepsilon_0H}{\ln(b/a)}`,"Condensador cilíndrico"],
+["U5","Condensadores",r`C_0=\frac{4\pi\varepsilon_0ab}{b-a}`,"Condensador esférico"],
+["U5","Condensadores",r`C=4\pi\varepsilon_0R`,"Esfera conductora aislada"],
+["U5","Condensadores",r`\frac{1}{C_{eq}}=\sum\frac{1}{C_i}`,"Condensadores en serie; misma carga"],
+["U5","Condensadores",r`C_{eq}=\sum C_i`,"Condensadores en paralelo; mismo ΔV"],
+["U5","Condensadores",r`U=\tfrac12Q\Delta V=\tfrac12C\Delta V^2=\frac{Q^2}{2C}`,"Energía almacenada"],
+["U5","Condensadores",r`u=\tfrac12\varepsilon E^2`,"Densidad de energía del campo"],
+["U5","Condensadores",r`K=\frac{\varepsilon}{\varepsilon_0}=1+\chi\qquad C_K=K\,C_0`,"Constante dieléctrica"],
+["U5","Condensadores",r`\vec D=\varepsilon_0\vec E+\vec P\qquad\oint\vec D\cdot d\vec A=q_{\text{libre}}`,"Ley de Gauss con dieléctricos"],
+["U5","Condensadores",r`\vec P=\varepsilon_0\chi\vec E\qquad\sigma_p=\vec P\cdot\hat n`,"Polarización y cargas ligadas"],
+
+["U6","Circuitos",r`I=\frac{dq}{dt}\qquad I=\int\vec J\cdot d\vec A`,"Intensidad y densidad de corriente"],
+["U6","Circuitos",r`\vec J=nq\,\vec v_d=\sigma\vec E`,"Ley de Ohm microscópica"],
+["U6","Circuitos",r`\Delta V=R\,I`,"Ley de Ohm macroscópica"],
+["U6","Circuitos",r`R=\frac{\rho L}{A}=\frac{L}{\sigma A}`,"Resistencia de un conductor óhmico"],
+["U6","Circuitos",r`\sigma=\frac{nq^2\tau}{m}`,"Conductividad según el modelo de Drude"],
+["U6","Circuitos",r`R_{eq}=\sum R_i`,"Resistencias en serie; misma corriente"],
+["U6","Circuitos",r`\frac{1}{R_{eq}}=\sum\frac{1}{R_i}`,"Resistencias en paralelo; mismo ΔV"],
+["U6","Circuitos",r`\sum I_{\text{entra}}=\sum I_{\text{sale}}`,"Primera ley de Kirchhoff: nodos"],
+["U6","Circuitos",r`\sum\Delta V=0`,"Segunda ley de Kirchhoff: mallas"],
+["U6","Circuitos",r`q(t)=C\varepsilon\left(1-e^{-t/RC}\right)`,"Carga del condensador en un circuito RC"],
+["U6","Circuitos",r`i(t)=\frac{\varepsilon}{R}e^{-t/RC}\qquad\tau=RC`,"Corriente y constante de tiempo"],
+["U6","Circuitos",r`P=\Delta V\,I=RI^2=\frac{\Delta V^2}{R}`,"Potencia y efecto Joule"]
+  ];
+  var lista=document.getElementById("lista"), vacio=document.getElementById("vacio"),
+      cuenta=document.getElementById("cuenta"), q=document.getElementById("q"),
+      chips=document.getElementById("chips"), uni="";
+  function norm(s){ return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,""); }
+  var nodos=F.map(function(f){
+    var li=document.createElement("li"); li.className="tarjeta c-u"+f[0].slice(1);
+    var d=document.createElement("div"); d.className="f";
+    try{ katex.render(f[2],d,{displayMode:true,throwOnError:false}); }catch(e){ d.textContent=f[2]; }
+    var p=document.createElement("p"); p.textContent=f[3];
+    var pie=document.createElement("div"); pie.className="pie-f";
+    var t=document.createElement("span"); t.className="chip-u"; t.textContent=f[1];
+    var b=document.createElement("button"); b.type="button"; b.className="copiar"; b.textContent="Copiar LaTeX";
+    b.addEventListener("click",function(){
+      var ok=function(){ b.textContent="¡Copiado!"; setTimeout(function(){ b.textContent="Copiar LaTeX"; },1400); };
+      if(navigator.clipboard) navigator.clipboard.writeText(f[2]).then(ok,function(){ b.textContent="No se pudo copiar"; });
+    });
+    pie.appendChild(t); pie.appendChild(b);
+    li.appendChild(d); li.appendChild(p); li.appendChild(pie); lista.appendChild(li);
+    return {el:li,u:f[0],busca:norm(f[1]+" "+f[3]+" "+f[2])};
+  });
+  function pintar(){
+    var t=norm(q.value.trim()), n=0;
+    nodos.forEach(function(x){
+      var ok=(!uni||x.u===uni)&&(!t||x.busca.indexOf(t)!==-1);
+      x.el.hidden=!ok; if(ok) n++;
+    });
+    vacio.hidden=n!==0;
+    cuenta.textContent=n+(n===1?" fórmula":" fórmulas");
+  }
+  q.addEventListener("input",pintar);
+  chips.addEventListener("click",function(ev){
+    var b=ev.target.closest("button"); if(!b) return;
+    uni=b.dataset.u;
+    [].forEach.call(chips.querySelectorAll("button"),function(c){ c.setAttribute("aria-pressed",String(c===b)); });
+    pintar();
+  });
+  pintar();
+});
+</script>
+</body>
+</html>
