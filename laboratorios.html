@@ -89,31 +89,63 @@ details>div{padding:0 16px 14px;color:var(--ink2);font-size:.93rem}
     <!-- L2 -->
     <article class="tarjeta lab c-u6" id="l2">
       <div class="lab-cab"><span class="lab-n">L2</span>
-        <div><h2>Osciloscopio</h2><p>Generador de señales · circuitos RC y RLC</p></div></div>
-      <p>Se usa el osciloscopio primero como instrumento de medida (amplitud, período, frecuencia y desfase) y
-        después para registrar la carga y descarga de un condensador, comparando la constante de tiempo medida con la calculada.</p>
+        <div><h2>Osciloscopio</h2><p>Pila · fuente DC · transformador 220/6 V · generador de funciones · modo XY</p></div></div>
+      <p>Se aprende a usar el osciloscopio como instrumento de medida: voltajes continuos y alternos, amplitud,
+        período y frecuencia de señales periódicas, y la representación XY de dos señales (figuras de Lissajous).</p>
       <div class="cols">
         <div class="bloque"><h3>Procedimiento</h3>
           <ul class="checklist" data-lab="l2">
-            <li><label><input type="checkbox"><span>Calibrar el osciloscopio con la señal de prueba.</span></label></li>
-            <li><label><input type="checkbox"><span>Medir amplitud, período y frecuencia de una senoidal.</span></label></li>
-            <li><label><input type="checkbox"><span>Alimentar el RC con una onda cuadrada de período ≫ RC.</span></label></li>
-            <li><label><input type="checkbox"><span>Medir el tiempo en que \(V_C\) llega al 63 % del máximo: eso es τ.</span></label></li>
-            <li><label><input type="checkbox"><span>Comparar con \(\tau=RC\) calculado y obtener el error relativo.</span></label></li>
-            <li><label><input type="checkbox"><span>Observar el desfase en modo XY y la oscilación amortiguada del RLC.</span></label></li>
+            <li><label><input type="checkbox"><span>Ajustar intensidad y foco. Con la entrada en GND, centrar la traza: esa es la referencia de 0 V.</span></label></li>
+            <li><label><input type="checkbox"><span>Poner la entrada en DC y medir la pila y la fuente; elegir la escala de V/div que dé más precisión.</span></label></li>
+            <li><label><input type="checkbox"><span>Conectar el transformador de 6 V y ajustar V/div y s/div hasta ver un ciclo completo.</span></label></li>
+            <li><label><input type="checkbox"><span>Leer \(V_p\), \(V_{pp}\) y el período \(T\); calcular \(f=1/T\) y comparar con el multímetro.</span></label></li>
+            <li><label><input type="checkbox"><span>Con el generador, ver ondas cuadrada y diente de sierra y comparar su frecuencia con la del generador.</span></label></li>
+            <li><label><input type="checkbox"><span>Activar el modo XY con dos senoidales (CH1 y CH2) y observar las figuras de Lissajous.</span></label></li>
           </ul></div>
-        <div class="bloque"><h3>Qué se mide</h3><ul>
-          <li>Amplitud, período y frecuencia de señales periódicas.</li>
-          <li>Constante de tiempo \(\tau=RC\) en la carga y la descarga.</li>
-          <li>Desfase entre dos señales y figuras de Lissajous.</li>
-          <li>Oscilación amortiguada del circuito RLC.</li></ul></div>
+        <div class="bloque"><h3>Cómo se lee la pantalla</h3><ul>
+          <li>Voltaje = (V/div) × (divisiones verticales).</li>
+          <li>Tiempo = (s/div) × (divisiones horizontales).</li>
+          <li>\(V_p=V_{pp}/2\) y, para una senoidal, \(V_{ef}=V_p/\sqrt2\) (lo que marca el multímetro en AC).</li>
+          <li>DC se ve como una línea horizontal desplazada; AC como una onda.</li></ul></div>
       </div>
-      <details><summary>Pregunta para el informe: ¿por qué el período de la onda cuadrada debe ser mucho mayor que RC?</summary>
-        <div>Para que el condensador tenga tiempo de cargarse por completo (unos 5τ) antes de que la señal cambie. Si no,
-          la curva no llega al máximo y medir el 63 % deja de tener sentido.</div></details>
+
+      <div class="bloque"><h3>Resultados obtenidos</h3>
+        <div class="tabla-env"><table>
+          <thead><tr><th>Medición</th><th>Osciloscopio</th><th>Referencia</th><th>Comentario</th></tr></thead>
+          <tbody>
+            <tr><td>Pila</td><td>1,56 V</td><td>Multímetro: 1,558 V</td><td>Diferencia ≈ 0,1 %</td></tr>
+            <tr><td>Fuente DC</td><td>2,8 V (escala 2 V/div)</td><td>Fuente: 2,5 V</td><td>Diferencia ≈ 12 %: escala gruesa para ese voltaje</td></tr>
+            <tr><td>Transformador</td><td>\(V_p=9{,}7\) V, \(V_{pp}=19{,}4\) V</td><td>\(V_{ef}=V_p/\sqrt2\approx6{,}9\) V</td><td>Sin carga da algo más que los 6 V nominales</td></tr>
+            <tr><td>Período de la red</td><td>\(T=15{,}6\) ms → \(f\approx64{,}1\) Hz</td><td>Red: 60 Hz</td><td>Diferencia ≈ 7 %, por la lectura de divisiones</td></tr>
+            <tr><td>Generador</td><td>Cuadrada y diente de sierra</td><td>4 V de amplitud, 60 kHz</td><td>Se comparó la frecuencia leída con la del generador</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <div class="vi">
+        <canvas id="cv-lis" role="img" aria-label="Figura de Lissajous según la relación de frecuencias y el desfase"></canvas>
+        <div class="panel">
+          <div class="campo"><span class="lbl">Figuras de Lissajous (modo XY)</span>
+            <p class="ayuda" style="font-size:.88rem;color:var(--ink2)">\(x=\sin(f_x t+\varphi)\), \(y=\sin(f_y t)\). Cambia la relación de frecuencias y el desfase.</p></div>
+          <div class="campo"><label for="lis-fx">Frecuencia en X <output id="lis-fx-o"></output></label>
+            <input type="range" id="lis-fx" min="1" max="5" step="1" value="1"></div>
+          <div class="campo"><label for="lis-fy">Frecuencia en Y <output id="lis-fy-o"></output></label>
+            <input type="range" id="lis-fy" min="1" max="5" step="1" value="1"></div>
+          <div class="campo"><label for="lis-f">Desfase φ <output id="lis-f-o"></output></label>
+            <input type="range" id="lis-f" min="0" max="180" step="1" value="90"></div>
+          <p class="nota idea" id="lis-exp"></p>
+        </div>
+      </div>
+
+      <details><summary>Pregunta para el informe: ¿por qué el multímetro marca menos que el pico que se ve en el osciloscopio?</summary>
+        <div>En AC el multímetro mide el valor eficaz. Para una senoidal \(V_{ef}=V_p/\sqrt2\): con \(V_p=9{,}7\) V da unos 6,9 V,
+          cerca de los 6 V del transformador.</div></details>
+      <details><summary>Pregunta para el informe: ¿cómo se obtiene la relación de frecuencias de una figura de Lissajous?</summary>
+        <div>Se cuentan los puntos donde la figura toca un borde horizontal y uno vertical:
+          \(f_y/f_x=\) (toques en el borde horizontal)/(toques en el borde vertical). Con 1:1 la figura es una recta, una elipse o
+          un círculo según el desfase (0°, intermedio o 90°).</div></details>
       <div style="display:flex;flex-wrap:wrap;gap:8px">
-        <a class="btn sec peq" href="teoria.html#u6">Teoría: unidad 6</a>
-        <a class="btn sec peq" href="simuladores.html#rc">Simulador RC</a></div>
+        <a class="btn sec peq" href="teoria.html#u6">Teoría: unidad 6</a></div>
     </article>
 
     <!-- L3 -->
@@ -228,6 +260,42 @@ document.addEventListener("DOMContentLoaded",function(){
   bs.forEach(function(b){ b.addEventListener("click",function(){ el=b.dataset.e; marca(el); vIn.value=el==="diodo"?.95:.6; dibuja(); }); });
   marca(el); vIn.addEventListener("input",dibuja); window.addEventListener("resize",dibuja);
   document.addEventListener("cc-tema",dibuja); dibuja();
+});
+</script>
+<script>
+/* Figuras de Lissajous del laboratorio 2. */
+document.addEventListener("DOMContentLoaded",function(){
+  var cv=document.getElementById("cv-lis"), cx=cv.getContext("2d"),
+      fx=document.getElementById("lis-fx"), fy=document.getElementById("lis-fy"), fi=document.getElementById("lis-f");
+  function mcd(a,b){ return b?mcd(b,a%b):a; }
+  function dibuja(){
+    var r=cv.getBoundingClientRect(); if(!r.width) return;
+    var d=window.devicePixelRatio||1, W=r.width, H=r.height; cv.width=W*d; cv.height=H*d; cx.setTransform(d,0,0,d,0,0);
+    var a=+fx.value, b=+fy.value, ph=+fi.value*Math.PI/180, c=getComputedStyle(document.documentElement),
+        A=W*.42, B=H*.4, ox=W/2, oy=H/2;
+    cx.clearRect(0,0,W,H);
+    cx.strokeStyle=c.getPropertyValue("--line"); cx.lineWidth=1;
+    for(var i=0;i<=10;i++){ var x=W*.08+i*(W*.84)/10; cx.beginPath(); cx.moveTo(x,H*.1); cx.lineTo(x,H*.9); cx.stroke(); }
+    for(var j=0;j<=8;j++){ var y=H*.1+j*(H*.8)/8; cx.beginPath(); cx.moveTo(W*.08,y); cx.lineTo(W*.92,y); cx.stroke(); }
+    cx.strokeStyle=c.getPropertyValue("--rosa"); cx.lineWidth=2.5; cx.lineJoin="round"; cx.beginPath();
+    for(var k=0;k<=1200;k++){ var t=k/1200*2*Math.PI, X=ox+A*Math.sin(a*t+ph), Y=oy-B*Math.sin(b*t);
+      if(k) cx.lineTo(X,Y); else cx.moveTo(X,Y); }
+    cx.stroke();
+    var g=mcd(a,b);
+    document.getElementById("lis-fx-o").textContent=a;
+    document.getElementById("lis-fy-o").textContent=b;
+    document.getElementById("lis-f-o").textContent=fi.value+"°";
+    var t2;
+    if(a===b){
+      var deg=+fi.value;
+      t2=deg===0||deg===180?"Misma frecuencia y en fase (o en contrafase): la figura es una recta.":
+         deg===90?"Misma frecuencia y desfase de 90°: la figura es un círculo (o una elipse si las amplitudes difieren).":
+         "Misma frecuencia con desfase intermedio: la figura es una elipse inclinada.";
+    } else t2="Relación de frecuencias "+(b/g)+":"+(a/g)+" (Y:X). Cuenta los toques con los bordes para leerla en la pantalla.";
+    document.getElementById("lis-exp").textContent=t2;
+  }
+  [fx,fy,fi].forEach(function(i){ i.addEventListener("input",dibuja); });
+  window.addEventListener("resize",dibuja); document.addEventListener("cc-tema",dibuja); dibuja();
 });
 </script>
 </body>
